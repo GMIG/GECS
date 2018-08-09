@@ -1,0 +1,48 @@
+{
+  "devices": [
+    {
+      "name": "BX-test",
+      "x-icon": 250,
+      "y-icon": 290,
+      "rot": 0,
+      "x-label": 270,
+      "y-label": 310,
+      "type":"Brix"
+    },
+    {
+      "name": "DocCentr",
+      "x-icon": 720,
+      "y-icon": 440,
+      "rot": 0,
+      "x-label": 720,
+      "y-label": 460,
+      "type":"TV"
+    },
+    {
+      "name": "model",
+      "x-icon": 620,
+      "y-icon": 440,
+      "rot": 0,
+      "x-label": 620,
+      "y-label": 470,
+      "type":"Brix"
+    },
+    {
+      "name": "SS-28-1",
+      "x-icon": 220,
+      "y-icon": 440,
+      "rot": 0,
+      "x-label": 220,
+      "y-label": 470,
+      "type":"Source"
+    }
+  ],
+  "switchGroups":
+    [
+      {
+        "name":"test",
+        "position":0,
+        "image":"Capture.jpg"
+      }
+    ]
+}

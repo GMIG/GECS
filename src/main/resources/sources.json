@@ -1,0 +1,16 @@
+[
+  {
+    "name":"SS-28-1",
+    "signal":"active",
+    "actions":[
+      {
+        "device":"DocCentr",
+        "command":"switchOn"
+      },
+      {
+        "device":"DocCentr",
+        "command":"check"
+      }
+    ]
+  }
+]

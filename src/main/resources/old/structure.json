@@ -1,0 +1,292 @@
+{
+  "devices": [
+    {
+      "ip": "10.8.3.1",
+      "name": "dveri",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.2",
+      "name": "214-1",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.3",
+      "name": "214-2",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.4",
+      "name": "bbk",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.5",
+      "name": "myGULAG",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.6",
+      "name": "reab1",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.7",
+      "name": "reab2",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.8",
+      "name": "bt",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.9",
+      "name": "kp",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.3.10",
+      "name": "proj",
+      "description": "n",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "ip": "10.8.1.1",
+      "mac": "fc:aa:14:f3:35:73",
+      "name": "Book",
+      "description": "n",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "ip": "10.8.1.2",
+      "mac": "fc:aa:14:f3:35:ca",
+      "name": "Doors",
+      "description": "n",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "ip": "10.8.1.3",
+      "mac": "fc:aa:14:f3:35:e8",
+      "name": "Projector",
+      "description": "n",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "ip": "10.8.1.7",
+      "mac": "fc:aa:14:f3:35:f0",
+      "name": "Lists",
+      "description": "n",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "ip": "10.8.1.5",
+      "mac": "fc:aa:14:f3:35:e0",
+      "name": "bx:cafe",
+      "description": "n",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "ip": "10.8.1.101",
+      "mac": "00:20:98:02:d0:aa",
+      "name": "Reabilitation",
+      "description": "n",
+      "factory": "DatatonFactory"
+    },
+    {
+      "ip": "10.8.1.102",
+      "mac": "00:20:98:02:d1:7e",
+      "name": "MyGULAG",
+      "description": "n",
+      "factory": "DatatonFactory"
+    },
+    {
+      "ip": "10.8.1.103",
+      "mac": "00:20:98:02:d1:09",
+      "name": "BBK",
+      "description": "n",
+      "factory": "DatatonFactory"
+    },
+    {
+      "ip": "10.8.1.104",
+      "mac": "00:20:98:02:cf:26",
+      "name": "214",
+      "description": "n",
+      "factory": "DatatonFactory"
+    },
+    {
+      "ip": "10.8.1.105",
+      "mac": "00:20:98:02:d1:25",
+      "name": "dDoors",
+      "description": "n",
+      "factory": "DatatonFactory"
+    },
+    {
+      "ip": "10.8.5.1",
+      "mac": "d8:cb:8a:97:44:25",
+      "name": "iDoors",
+      "description": "n",
+      "factory": "InfokioskFactory"
+    },
+    {
+      "ip": "10.8.5.2",
+      "mac": "d8:cb:8a:97:45:2b",
+      "name": "iBBK",
+      "description": "n",
+      "factory": "InfokioskFactory"
+    },
+    {
+      "ip": "10.8.5.3",
+      "mac": "d8:cb:8a:97:44:7e",
+      "name": "Near214",
+      "description": "n",
+      "factory": "InfokioskFactory"
+    },
+    {
+      "ip": "10.8.5.4",
+      "mac": "d8:cb:8a:97:44:33",
+      "name": "DeloVr",
+      "description": "n",
+      "factory": "InfokioskFactory"
+    },
+    {
+      "ip": "10.8.5.5",
+      "mac": "d8:cb:8a:97:44:26",
+      "name": "Biblio",
+      "description": "n",
+      "factory": "InfokioskFactory"
+    },
+    {
+      "ip": "10.8.0.125",
+      "name": "DocCentr",
+      "description": "n",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "ip": "10.8.5.100",
+      "name": "TV:cafe",
+      "description": "n",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "ip": "10.8.0.110",
+      "mac": "d8:cb:8a:97:22:2b",
+      "name": "BX:TEST",
+      "description": "n",
+      "factory": "VLCPlayer2ScreenFactory"
+    }
+  ],
+  "modules": [
+    {
+      "name": "MOD:mbook",
+      "sequence": [
+        [
+          "kp"
+        ],
+        [
+          "Book"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:Projector",
+      "sequence": [
+        [
+          "proj"
+        ],
+        [
+          "Projector"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:214",
+      "sequence": [
+        [
+          "214-1","214-2"
+        ],
+        [
+          "214"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:Reabilitation",
+      "sequence": [
+        [
+          "reab1","reab2"
+        ],
+        [
+          "Reabilitation"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:MyGULAG",
+      "sequence": [
+        [
+          "myGULAG"
+        ],
+        [
+          "MyGULAG"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:Doors",
+      "sequence": [
+        [
+          "dveri"
+        ],
+        [
+          "dDoors"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:bbk",
+      "sequence": [
+        [
+          "bbk"
+        ],
+        [
+          "BBK"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:cafe",
+      "sequence": [
+        [
+          "TV:cafe"
+        ],
+        [
+          "bx:cafe"
+        ]
+      ]
+    }
+  ],
+  "switchGroups":[
+    {
+      "name":"mainExposition",
+      "list":["MOD:mbook","MOD:Projector","MOD:214","MOD:Reabilitation", "MOD:MyGULAG","MOD:Doors","MOD:bbk"
+      ,"Doors","iDoors","iDoors","iBBK","Near214","DeloVr","Biblio","bt","Lists","DocCentr"
+      ]
+    },
+    {
+      "name":"cafe",
+      "list":["MOD:cafe","BX:TEST"]
+    }
+
+  ]
+
+}

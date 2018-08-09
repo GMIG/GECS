@@ -1,0 +1,33 @@
+{
+  "devices": [
+    {
+      "ip": "10.8.1.100",
+"mac":"40:8d:5c:f0:ac:eb",
+      "name": "BX-test",
+      "description": "n",
+      "factory": "VLCPlayer2ScreenFactory"
+    },
+    {
+      "ip": "10.8.0.125",
+      "name": "DocCentr",
+      "description": "n",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "model",
+      "factory": "VLCPlayerFactory",
+      "ip": "127.0.0.5",
+      "mac": "11:11:11:11:11:11",
+      "description": "TV player: First camps, Small story:Tolstaya"
+    }
+  ],
+  "modules": [],
+  "switchGroups":[
+    {
+      "name":"test",
+      "list":["BX-test","DocCentr","model"]
+    }
+
+  ]
+
+}

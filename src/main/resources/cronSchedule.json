@@ -1,0 +1,21 @@
+[
+    {
+    "switchGroup": "test",
+    "switch on": {
+        "include": [
+          "0 1-59/10 10 ? * *"
+        ],
+        "exclude": [
+        ]
+      },
+    "switch off": {
+        "include": [
+          "0 8-59/10 10 ? * *"
+        ],
+        "exclude": [
+        ]
+      }
+    }
+]
+
+
