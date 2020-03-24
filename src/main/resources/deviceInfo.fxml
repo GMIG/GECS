@@ -3,74 +3,62 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label text="name" fx:id="name" >
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
+      prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <Label text="name" fx:id="name">
+      <VBox.margin>
+         <Insets bottom="30.0"/>
+      </VBox.margin>
+      <font>
+         <Font size="24.0"/>
+      </font>
+   </Label>
+   <HBox>
+      <VBox.margin>
+         <Insets/>
+      </VBox.margin>
+      <Label text="IP"/>
+      <TextField fx:id="ip" editable="false">
+         <HBox.margin>
+            <Insets left="10.0"/>
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <HBox>
+      <Label text="Description"/>
+      <TextField fx:id="description" editable="false">
+         <HBox.margin>
+            <Insets left="10.0"/>
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <HBox>
+      <Label text="Factory"/>
+      <TextField fx:id="factory" editable="false">
+         <HBox.margin>
+            <Insets left="10.0"/>
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <HBox>
+      <VBox.margin>
+         <Insets/>
+      </VBox.margin>
+      <Label text="View"/>
+      <TextField fx:id="view" editable="false">
+         <HBox.margin>
+            <Insets left="10.0"/>
+         </HBox.margin>
+      </TextField>
+   </HBox>
+   <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+      <Label text="Log">
          <VBox.margin>
-            <Insets bottom="30.0" />
+            <Insets bottom="10.0"/>
          </VBox.margin>
-         <font>
-            <Font size="24.0" />
-         </font>
       </Label>
-      <HBox>
-         <children>
-            <Label text="IP" />
-            <TextField fx:id="ip" editable="false">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </HBox>
-      <HBox>
-         <children>
-            <Label text="Description" />
-            <TextField fx:id="description" editable="false">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
-      <HBox>
-         <children>
-            <Label text="Factory" />
-            <TextField fx:id="factory" editable="false">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-      </HBox>
-      <HBox>
-         <children>
-            <Label text="View" />
-            <TextField fx:id="view" editable="false">
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </TextField>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
-         <children>
-            <Label text="Log">
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextArea fx:id="log" editable="false" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-   </children>
+      <TextArea fx:id="log" editable="false" VBox.vgrow="ALWAYS"/>
+   </VBox>
 </VBox>

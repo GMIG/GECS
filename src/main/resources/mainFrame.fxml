@@ -1,5 +1,5 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox prefHeight="950.0" prefWidth="1726.0" xmlns="http://javafx.com/javafx/8">
-    <TabPane id="tabs" prefHeight="950.0" prefWidth="1700.0" tabClosingPolicy="UNAVAILABLE"/>
+<VBox prefHeight="1030.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/8">
+    <TabPane id="tabs" prefHeight="1030.0" prefWidth="+Infinity" tabClosingPolicy="UNAVAILABLE"/>
 </VBox>

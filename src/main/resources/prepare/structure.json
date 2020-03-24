@@ -1,0 +1,828 @@
+{
+  "devices": [
+    {
+      "name": "BX-R1-1",
+      "ip": "10.8.1.2",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Пропаганда, Первые лагеря",
+      "factory": "VLCPlayer2ScreenFactory"
+    },
+    {
+      "name": "BX-R1-2",
+      "ip": "10.8.1.5",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Беломорканал,Фильм Соловки",
+      "factory": "VLCPlayer2ScreenFactory"
+    },
+    {
+      "name": "BX-11-1",
+      "ip": "10.8.1.1",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Мал. Ист.: Толстая",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-12-1",
+      "ip": "10.8.1.3",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-13-1",
+      "ip": "10.8.1.6",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-13-2",
+      "ip": "10.8.1.7",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-13-3",
+      "ip": "10.8.1.8",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Соловецкий альбом",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-14-1",
+      "ip": "10.8.1.10",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-15-1",
+      "ip": "10.8.1.11",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-15-2",
+      "ip": "10.8.1.12",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-24-1",
+      "ip": "10.8.1.14",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-24-2",
+      "ip": "10.8.1.25",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-24-3",
+      "ip": "10.8.1.28",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-221-1",
+      "ip": "10.8.1.15",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-221-2",
+      "ip": "10.8.1.103",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Палачи",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-23-1",
+      "ip": "10.8.1.18",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-23-2",
+      "ip": "10.8.1.20",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-26-1",
+      "ip": "10.8.1.23",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-271-1",
+      "ip": "10.8.1.26",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-28-2",
+      "ip": "10.8.1.29",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "МИст:",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-R2-1",
+      "ip": "10.8.1.16",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": " Панорама,Большой террор",
+      "factory": "VLCPlayer2ScreenFactory"
+    },
+    {
+      "name": "BX-R2-2",
+      "ip": "10.8.1.51",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "ХРАМ, Смерть Сталина",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-R2-3",
+      "ip": "10.8.1.31",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Сны ГУЛАГа",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-A4-1",
+      "ip": "10.8.1.105",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Наши дни",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "BX-114-1",
+      "ip": "10.8.1.100",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Кафе",
+      "factory": "VLCPlayerFactory"
+    },
+    {
+      "name": "DT-R1-1",
+      "ip": "10.8.10.9",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Показательные процессы",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "DT-R2-1",
+      "ip": "10.8.10.17",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": " Поезд",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "DT-R2-2",
+      "ip": "10.8.10.30",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "В ГУЛАГе",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "DT-R2-3",
+      "ip": "10.8.10.21",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": " ГУЛАГ как ПК",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "DT-R2-4",
+      "ip": "10.8.10.104",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Возвращение",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "DT-R2-5",
+      "ip": "10.8.10.52",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Дети",
+      "factory": "DatatonFactory"
+    },
+    {
+      "name": "PC-21-1",
+      "ip": "10.8.1.101",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Карта ГУЛАГа",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "name": "PC-21-2",
+      "ip": "10.8.1.102",
+      "mac": "40:8d:5c:f0:ac:eb",
+      "description": "Карта ГУЛАГа",
+      "factory": "VLCTestPlayerFactory"
+    },
+    {
+      "name": "PR-12-2",
+      "ip": " 10.8.3.4",
+      "description": "Пропаганда",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-13-1",
+      "ip": "10.8.3.5",
+      "description": "Фильм Соловки",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-15-3",
+      "ip": " 10.8.3.13",
+      "description": "Беломорканал",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-11-2",
+      "ip": "10.8.3.1",
+      "description": "Мал. Ист.: Толстая",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-12-1",
+      "ip": "10.8.3.3",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-13-2",
+      "ip": "10.8.3.6",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-13-3",
+      "ip": "10.8.3.7",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-13-4",
+      "ip": "10.8.3.8",
+      "description": "Соловецкий альбом",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-14-2",
+      "ip": "10.8.3.10",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-15-1",
+      "ip": "10.8.3.11",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-15-2",
+      "ip": "10.8.3.12",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-24-1",
+      "ip": "10.8.3.14",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-24-4",
+      "ip": "10.8.3.25",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-24-5",
+      "ip": "10.8.3.28",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-221-1",
+      "ip": "10.8.3.15",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "TV-221-1",
+      "ip": "10.8.5.103",
+      "description": "Палачи",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "PR-23-1",
+      "ip": "10.8.3.19",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-23-2",
+      "ip": "10.8.3.20",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-26-1",
+      "ip": "10.8.3.23",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-271-1",
+      "ip": "10.8.3.26",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-28-1",
+      "ip": "10.8.3.29",
+      "description": "МИст:",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-222-1",
+      "ip": "10.8.3.16",
+      "description": "Большой террор",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": " PR-26-2",
+      "ip": " 10.8.3.24",
+      "description": " Панорама",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-23-3",
+      "ip": "10.8.3.31",
+      "description": "Сны ГУЛАГа",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "TV-A4-1",
+      "ip": "10.8.5.105",
+      "description": "Наши дни",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "TV-114-1",
+      "ip": "10.8.5.100",
+      "description": "Кафе",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "PR-14-1",
+      "ip": "10.8.3.9",
+      "description": "Показательные процессы",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-24-2",
+      "ip": "10.8.3.18",
+      "description": "Поезд",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-24-3",
+      "ip": " 10.8.3.17",
+      "description": " Поезд",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-A2-1",
+      "ip": "10.8.3.30",
+      "description": "В ГУЛАГе",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-25-1",
+      "ip": "10.8.3.21",
+      "description": "ГУЛАГ как ПК",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "PR-25-2",
+      "ip": " 10.8.3.22",
+      "description": " ГУЛАГ как ПК",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "TV-28-1",
+      "ip": "10.8.5.104",
+      "description": "Возвращение",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "PR-272-1",
+      "ip": "10.8.3.27",
+      "description": "Дети",
+      "factory": "ProjectorFactory"
+    },
+    {
+      "name": "TV-21-1",
+      "ip": "10.8.5.101",
+      "description": "Карта ГУЛАГа",
+      "factory": "SharpTVFactory"
+    },
+    {
+      "name": "TV-21-2",
+      "ip": "10.8.5.102",
+      "description": "Карта ГУЛАГа",
+      "factory": "SharpTVFactory"
+    }
+  ],
+  "modules": [
+    {
+      "name": "MOD:BX-R1-1:PR-12-2_PR-11-1",
+      "sequence": [
+        [
+          "PR-12-2",
+          "PR-11-1"
+        ],
+        [
+          "BX-R1-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-R1-2:PR-15-3_PR-13-1",
+      "sequence": [
+        [
+          "PR-15-3",
+          "PR-13-1"
+        ],
+        [
+          "BX-R1-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-11-1:PR-11-2",
+      "sequence": [
+        [
+          "PR-11-2"
+        ],
+        [
+          "BX-11-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-12-1:PR-12-1",
+      "sequence": [
+        [
+          "PR-12-1"
+        ],
+        [
+          "BX-12-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-13-1:PR-13-2",
+      "sequence": [
+        [
+          "PR-13-2"
+        ],
+        [
+          "BX-13-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-13-2:PR-13-3",
+      "sequence": [
+        [
+          "PR-13-3"
+        ],
+        [
+          "BX-13-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-13-3:PR-13-4",
+      "sequence": [
+        [
+          "PR-13-4"
+        ],
+        [
+          "BX-13-3"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-14-1:PR-14-2",
+      "sequence": [
+        [
+          "PR-14-2"
+        ],
+        [
+          "BX-14-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-15-1:PR-15-1",
+      "sequence": [
+        [
+          "PR-15-1"
+        ],
+        [
+          "BX-15-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-15-2:PR-15-2",
+      "sequence": [
+        [
+          "PR-15-2"
+        ],
+        [
+          "BX-15-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-24-1:PR-24-1",
+      "sequence": [
+        [
+          "PR-24-1"
+        ],
+        [
+          "BX-24-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-24-2:PR-24-4",
+      "sequence": [
+        [
+          "PR-24-4"
+        ],
+        [
+          "BX-24-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-24-3:PR-24-5",
+      "sequence": [
+        [
+          "PR-24-5"
+        ],
+        [
+          "BX-24-3"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-221-1:PR-221-1",
+      "sequence": [
+        [
+          "PR-221-1"
+        ],
+        [
+          "BX-221-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-221-2:TV-221-1",
+      "sequence": [
+        [
+          "TV-221-1"
+        ],
+        [
+          "BX-221-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-23-1:PR-23-1",
+      "sequence": [
+        [
+          "PR-23-1"
+        ],
+        [
+          "BX-23-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-23-2:PR-23-2",
+      "sequence": [
+        [
+          "PR-23-2"
+        ],
+        [
+          "BX-23-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-26-1:PR-26-1",
+      "sequence": [
+        [
+          "PR-26-1"
+        ],
+        [
+          "BX-26-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-271-1:PR-271-1",
+      "sequence": [
+        [
+          "PR-271-1"
+        ],
+        [
+          "BX-271-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-28-2:PR-28-1",
+      "sequence": [
+        [
+          "PR-28-1"
+        ],
+        [
+          "BX-28-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-R2-1: PR-26-2_PR-222-1",
+      "sequence": [
+        [
+          " PR-26-2",
+          "PR-222-1"
+        ],
+        [
+          "BX-R2-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-R2-3:PR-23-3",
+      "sequence": [
+        [
+          "PR-23-3"
+        ],
+        [
+          "BX-R2-3"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-A4-1:TV-A4-1",
+      "sequence": [
+        [
+          "TV-A4-1"
+        ],
+        [
+          "BX-A4-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:BX-114-1:TV-114-1",
+      "sequence": [
+        [
+          "TV-114-1"
+        ],
+        [
+          "BX-114-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R1-1:PR-14-1",
+      "sequence": [
+        [
+          "PR-14-1"
+        ],
+        [
+          "DT-R1-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R2-1:PR-24-3_PR-24-2",
+      "sequence": [
+        [
+          "PR-24-3",
+          "PR-24-2"
+        ],
+        [
+          "DT-R2-1"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R2-2:PR-A2-1",
+      "sequence": [
+        [
+          "PR-A2-1"
+        ],
+        [
+          "DT-R2-2"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R2-3:PR-25-2",
+      "sequence": [
+        [
+          "PR-25-2",
+          "PR-25-1"
+        ],
+        [
+          "DT-R2-3"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R2-4:TV-28-1",
+      "sequence": [
+        [
+          "TV-28-1"
+        ],
+        [
+          "DT-R2-4"
+        ]
+      ]
+    },
+    {
+      "name": "MOD:DT-R2-5:PR-272-1",
+      "sequence": [
+        [
+          "PR-272-1"
+        ],
+        [
+          "DT-R2-5"
+        ]
+      ]
+    }
+  ],
+  "switchGroups": [
+    {
+      "name": "test",
+      "list": [
+        "MOD:BX-R1-1:PR-12-2_PR-11-1",
+        "MOD:BX-R1-2:PR-15-3_PR-13-1",
+        "MOD:BX-11-1:PR-11-2",
+        "MOD:BX-12-1:PR-12-1",
+        "MOD:BX-13-1:PR-13-2",
+        "MOD:BX-13-2:PR-13-3",
+        "MOD:BX-13-3:PR-13-4",
+        "MOD:BX-14-1:PR-14-2",
+        "MOD:BX-15-1:PR-15-1",
+        "MOD:BX-15-2:PR-15-2",
+        "MOD:BX-24-1:PR-24-1",
+        "MOD:BX-24-2:PR-24-4",
+        "MOD:BX-24-3:PR-24-5",
+        "MOD:BX-221-1:PR-221-1",
+        "MOD:BX-221-2:TV-221-1",
+        "MOD:BX-23-1:PR-23-1",
+        "MOD:BX-23-2:PR-23-2",
+        "MOD:BX-26-1:PR-26-1",
+        "MOD:BX-271-1:PR-271-1",
+        "MOD:BX-28-2:PR-28-1",
+        "MOD:BX-R2-1: PR-26-2_PR-222-1",
+        "MOD:BX-R2-3:PR-23-3",
+        "MOD:BX-A4-1:TV-A4-1",
+        "MOD:BX-114-1:TV-114-1",
+        "MOD:DT-R1-1:PR-14-1",
+        "MOD:DT-R2-1:PR-24-3_PR-24-2",
+        "MOD:DT-R2-2:PR-A2-1",
+        "MOD:DT-R2-3:PR-25-2",
+        "MOD:DT-R2-4:TV-28-1",
+        "MOD:DT-R2-5:PR-272-1",
+        "PC-21-1",
+        "PC-21-2",
+        "BX-R2-2"
+      ]
+    }
+  ]
+}

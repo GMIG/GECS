@@ -18,9 +18,9 @@ import java.util.function.Consumer;
 public class ListenableArgCommand<T>  {
     private static final Logger logger = Logger.getLogger(ListenableArgCommand.class);
 
-    protected ArgCommand<Object,T> command;
-    protected String name;
-    protected Executor executor = Executors.newCachedThreadPool();
+    protected final ArgCommand<Object,T> command;
+    protected final String name;
+    protected final Executor executor = Executors.newCachedThreadPool();
     public final ConcurrentLinkedQueue<Runnable> started                     = new ConcurrentLinkedQueue<>();
     public final ConcurrentLinkedQueue <BiConsumer<T,Throwable>> completed    = new ConcurrentLinkedQueue<>();
     public final ConcurrentLinkedQueue<Consumer<T>> success                  = new ConcurrentLinkedQueue<>();

@@ -1,15 +1,37 @@
-[
-  {
-    "name":"SS-28-1",
-    "signal":"active",
-    "actions":[
+[  {
+    "name": "SS-28-1",
+    "signals": [
       {
-        "device":"DocCentr",
-        "command":"switchOn"
+        "name": "active",
+        "actions": [
+          {
+            "device": "BX-R2-1",
+            "command": "play"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "starter",
+    "signals": [
+      {
+        "name": "on",
+        "actions": [
+          {
+            "device": "Expo",
+            "command": "switchOn"
+          }
+        ]
       },
       {
-        "device":"DocCentr",
-        "command":"check"
+        "name": "off",
+        "actions": [
+          {
+            "device": "Expo",
+            "command": "switchOff"
+          }
+        ]
       }
     ]
   }

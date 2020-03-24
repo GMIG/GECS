@@ -22,21 +22,24 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by brix on 5/11/2018.
  */
+@SuppressWarnings("InfiniteLoopStatement")
 public class SchedulerView {
-    public MonthPage page;
+    MonthPage page= new MonthPage();
+    private MonthView calendarView = page.getMonthView();//new MonthView();
+    private int daysToDisplay = 360*2;
 
+    public void setToday(){
+        Platform.runLater(() -> calendarView.setToday(LocalDate.now()));
+    }
 
     public SchedulerView() {
-        page = new MonthPage();
-        MonthView calendarView = page.getMonthView();//new MonthView();
+       //page = new MonthPage();
+       // MonthView calendarView = page.getMonthView();//new MonthView();
         calendarView.addEventFilter(ContextMenuEvent.CONTEXT_MENU_REQUESTED, Event::consume);
         calendarView.addEventFilter(MouseEvent.ANY, Event::consume);
         Calendar birthdays = new Calendar("Birthdays");
@@ -59,19 +62,19 @@ public class SchedulerView {
 
         calendarView.setRequestedTime(LocalTime.now());
 
-        Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
+        /*Thread updateTimeThread = new Thread("Calendar: Update Time Thread") {
             @Override
             public void run() {
                 while (true) {
-                    Platform.runLater(() -> {
-                        calendarView.setToday(LocalDate.now());
-                    });
+                    Platform.runLater(() -> calendarView.setToday(LocalDate.now()));
                     try {
-                        sleep(1000*60*60*11);
-                    } catch (InterruptedException e) {}
+                        sleep(1000 * 60 * 60 * 11);
+                    } catch (InterruptedException e) {
+                    }
                 }
             }
-        };
+        };*/
+
         AnchorPane.setTopAnchor(calendarView, 0.0);
         calendarView.setPrefHeight(270);
         calendarView.setPrefWidth(400);
@@ -114,8 +117,8 @@ public class SchedulerView {
                 "    -fx-text-fill: red;\n" +
                 "    -fx-border-color: firebrick firebrick firebrick firebrick;\n" +
                 "}" );
-        updateTimeThread.setPriority(Thread.MIN_PRIORITY);
-        updateTimeThread.start();
+        //updateTimeThread.setPriority(Thread.MIN_PRIORITY);
+        //updateTimeThread.start();
     }
 
     public void setDates(ArrayList<Date> allDatesOn,ArrayList<Date> allDatesOff){
@@ -162,12 +165,12 @@ public class SchedulerView {
                 StandardCommands.switchOn.friendlyName,
                 switchGroup.getName(),
                 Date.from(Instant.now()),
-                Date.from(Instant.now().plus(20, ChronoUnit.DAYS)));
+                Date.from(Instant.now().plus(daysToDisplay, ChronoUnit.DAYS)));
         ArrayList<Date> off = scheduler.getJobDates(
                 StandardCommands.switchOff.friendlyName,
                 switchGroup.getName(),
                 Date.from(Instant.now()),
-                Date.from(Instant.now().plus(20, ChronoUnit.DAYS)));
+                Date.from(Instant.now().plus(daysToDisplay, ChronoUnit.DAYS)));
         setDates(on,off);
     }
 

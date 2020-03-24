@@ -1,0 +1,300 @@
+[
+  {
+    "name":"testExpo_bot",
+    "token":"747756215:AAE5v95TCfNa_Pdd2eVLog_dJS3xGmRKOl4",
+    "allowedChats":[-346908453],
+    "proxyPort":9150,
+    "responses":[
+      {
+        "type":"choice",
+        "request":"Бот",
+        "text":" пожалуйста выберите что починить:",
+        "choice":[
+          "починить большое видео",
+          "починить маленькую историю",
+          "починить интерактив",
+          "ничего не чинить"
+        ]
+      },
+      {
+        "type":"choice",
+        "request":"бот",
+        "text":" пожалуйста выберите что починить:",
+        "choice":[
+          "починить большое видео",
+          "починить маленькую историю",
+          "починить интерактив",
+          "ничего не чинить"
+        ]
+      },
+      {
+        "type":"choice",
+        "request":"починить большое видео",
+        "text":" пожалуйста выберите какое большое видео починить (или отключить):",
+        "choice":[
+          "починить Первые Лагеря",
+          "починить Пропаганда",
+          "починить Соловки",
+          "отключить Показательные процессы",
+          "починить Беломорканал",
+          "починить Большой террор",
+          "отключить Поезд",
+          "отключить ГУЛАГ как Промкомплекс",
+          "починить Панорама",
+          "отключить В ГУЛАГе",
+          "отключить Дети",
+          "починить Сны ГУЛАГа",
+          "отключить Возвращение",
+          "починить Наши дни",
+          "починить Переселения",
+          "ничего не чинить"
+        ]
+      },
+      {
+        "type":"choice",
+        "request":"починить маленькую историю",
+        "text":" пожалуйста выберите:",
+        "choice":[
+          "починить Мал. Ист. Толстая",
+          "починить Мал. Ист. Арманд",
+          "починить Мал. Ист. Мальсагов",
+          "починить Мал. Ист. Казаринов",
+          "починить Мал. Ист. Рютин",
+          "починить Мал. Ист. Камаса",
+          "починить Мал. Ист. Крижановский",
+          "починить Мал. Ист. Филипов",
+          "починить Мал. Ист. Вагнер",
+          "починить Мал. Ист. Краюшкин",
+          "починить Мал. Ист. Сухомлинов",
+          "починить Мал. Ист. Шаламов",
+          "починить Мал. Ист. Железовская",
+          "починить Мал. Ист. Пашаева",
+          "починить Мал. Ист. Маркова",
+          "починить Мал. Ист. Солженицын",
+          "ничего не чинить"
+        ]
+      },
+      {
+        "type":"choice",
+        "request":"починить интерактив",
+        "text":" пожалуйста выберите:",
+        "choice":[
+          "починить соловецкий альбом",
+          "починить карту ГУЛАГа левую",
+          "починить карту ГУЛАГа правую",
+          "починить палачей",
+          "ничего не чинить"
+        ]
+      },
+      {
+        "type":"action",
+        "request":"починить Первые Лагеря",
+        "device":"BX-R1-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Пропаганда",
+        "device":"BX-R1-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Соловки",
+        "device":"BX-R1-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Беломорканал",
+        "device":"BX-R1-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Панорама",
+        "device":"BX-R2-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Большой террор",
+        "device":"BX-R2-3",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Сны ГУЛАГа",
+        "device":"BX-R2-3",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Наши дни",
+        "device":"BX-A4-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"отключить Показательные процессы",
+        "device":"MOD:DT-R1-1:PR-14-1",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"отключить Поезд",
+        "device":"MOD:DT-R2-1:PR-24-3_PR-24-2",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"отключить ГУЛАГ как Промкомплекс",
+        "device":"MOD:DT-R2-3:PR-25-2",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"отключить В ГУЛАГе",
+        "device":"MOD:DT-R2-2:PR-A2-1",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"отключить Дети",
+        "device":"MOD:DT-R2-5:PR-272-1",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"отключить Возвращение",
+        "device":"MOD:DT-R2-4:TV-28-1",
+        "command":"forceSwitchOff"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Толстая",
+        "device":"BX-11-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Арманд",
+        "device":"BX-12-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Мальсагов",
+        "device":"BX-13-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Казаринов",
+        "device":"BX-13-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Рютин",
+        "device":"BX-14-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Камаса",
+        "device":"BX-15-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Крижановский",
+        "device":"BX-15-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Филипов",
+        "device":"BX-24-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Вагнер",
+        "device":"BX-221-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Краюшкин",
+        "device":"BX-23-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Сухомлинов",
+        "device":"BX-23-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Шаламов",
+        "device":"BX-26-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Железовская",
+        "device":"BX-24-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Пашаева",
+        "device":"BX-271-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Маркова",
+        "device":"BX-24-3",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить Мал. Ист. Солженицын",
+        "device":"BX-28-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить соловецкий альбом",
+        "device":"BX-13-3",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить карту ГУЛАГа левую",
+        "device":"PC-21-2",
+        "command":"checkedRestart"
+      },
+      {
+        "type":"action",
+        "request":"починить карту ГУЛАГа правую",
+        "device":"PC-21-1",
+        "command":"checkedRestart"
+      },
+      {
+        "type": "action",
+        "request": "починить палачей",
+        "device": "BX-221-2",
+        "command": "checkedRestart"
+      },
+      {
+        "type":"text",
+        "request":"ничего не чинить",
+        "text":"вот и славно"
+      }
+    ]
+  }
+]

@@ -60,5 +60,9 @@ public class RegularCheckManager {
         device.switchOnCmd().exception.add((o)->stopChecks());
         device.switchOffCmd().started.add(this::stopChecks);
         device.switchOnCmd().success.add((o)->beginChecks());
+        if(device.checkedRestartCmd()!=null) {
+            device.checkedRestartCmd().started.add(this::stopChecks);
+            device.checkedRestartCmd().success.add((o)->beginChecks());
+        }
     }
 }

@@ -7,7 +7,8 @@ public enum StandardCommands {
     switchOn("switch on"),
     switchOff("switch off"),
     check("check"),
-    init("update state");
+    init("update state"),
+    checkedRestart("checked restart");
     public final String friendlyName;
 
     StandardCommands(String in_name) {

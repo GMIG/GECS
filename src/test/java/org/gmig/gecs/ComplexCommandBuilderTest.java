@@ -18,20 +18,20 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by brix on 4/4/2018.
  */
+@SuppressWarnings("EmptyCatchBlock")
 public class ComplexCommandBuilderTest {
     private static final Logger logger = Logger.getLogger(ComplexCommandBuilderTest.class);
 
-    ArrayList<Supplier<CompletableFuture<String>>> cmds;
+    private final ArrayList<Supplier<CompletableFuture<String>>> cmds = new ArrayList<>();
 
     Supplier<CompletableFuture<String>> fu(Supplier<CompletableFuture<String>> old,int i, ArrayList<String> result){
         Supplier<CompletableFuture<String>>add =  cmds.get(i);
-        Supplier<CompletableFuture<String>> cmdnew = ()->{
+        return ()->{
             return old.get().thenCompose((r)->{
                 result.add(r);
                 logger.debug(result);
                 return add.get();});
         };
-        return cmdnew;
     }
     @Test
     public void testBuildt() throws Exception {
@@ -322,7 +322,7 @@ public class ComplexCommandBuilderTest {
         assertTrue(b2.get() && !b1.get());
         Thread.sleep(1100);
         assertTrue(b1.get() && b2.get());
-        HashMap g = (HashMap) f.get();
+        HashMap g = f.get();
         logger.debug(g);
         assertTrue(g.containsKey("run11"));
         assertTrue(g.containsValue("11"));
@@ -360,7 +360,7 @@ public class ComplexCommandBuilderTest {
         assertTrue(b1.get() && !b2.get());
         Thread.sleep(1100);
         assertTrue(b1.get() && b2.get());
-        HashMap g = (HashMap) f.get();
+        HashMap g = f.get();
         logger.debug(g);
         assertTrue(g.containsKey("run11"));
         assertTrue(g.containsValue("11"));

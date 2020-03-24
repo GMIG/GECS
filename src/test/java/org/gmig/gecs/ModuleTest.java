@@ -57,13 +57,13 @@ public class ModuleTest {
        Thread.sleep(30000);
 
    }
-    PJLinkDeviceModel m;
+    private PJLinkDeviceModel m;
 
-   NioSocketAcceptor acc;
-    NioSocketAcceptor acc1;
-    NioSocketAcceptor acc2;
-    UnitDeviceModel modPC;
-    UnitDeviceModel modPC1;
+   private NioSocketAcceptor acc;
+    private NioSocketAcceptor acc1;
+    private NioSocketAcceptor acc2;
+    private UnitDeviceModel modPC;
+    private UnitDeviceModel modPC1;
     @Test
     public void testTwo() throws Exception{
         m = new PJLinkDeviceModel();
@@ -178,9 +178,9 @@ public class ModuleTest {
                 "]" +
                 "}";
         StructureReader reader = new StructureReader();
-        reader.factories.add(new VLCPlayerFactory());
-        reader.factories.add(new ProjectorFactory());
-        HashSet<ManagedDevice> devices =  reader.loadDevicesFromJSON(json);
+        StructureReader.factories.add(new VLCPlayerFactory());
+        StructureReader.factories.add(new ProjectorFactory());
+        HashSet<ManagedDevice> devices =  StructureReader.loadDevicesFromJSON(json);
         HashSet<Module> modules = StructureReader.loadModulesFromJSON( devices,json);
         modules.stream().findFirst().get().switchOnCmd().exec();
         Thread.sleep(10000);
@@ -248,10 +248,10 @@ public class ModuleTest {
                     "]" +
                 "}";
         StructureReader reader = new StructureReader();
-        reader.factories.add(new VLCPlayerFactory());
-        reader.factories.add(new ProjectorFactory());
-        HashSet<ManagedDevice> devices =  reader.loadDevicesFromJSON(json);
-        HashSet<Module> modules = reader.loadModulesFromJSON( devices,json);
+        StructureReader.factories.add(new VLCPlayerFactory());
+        StructureReader.factories.add(new ProjectorFactory());
+        HashSet<ManagedDevice> devices =  StructureReader.loadDevicesFromJSON(json);
+        HashSet<Module> modules = StructureReader.loadModulesFromJSON( devices,json);
         HashSet<Switchable> switchables = new HashSet<>();
         switchables.addAll(modules);switchables.add(devices.stream().filter((dev)->dev.getName().equals("PR-11.2")).findFirst().get());
         HashSet<SwitchGroup> switchGroups = StructureReader.loadSwitchersFromJSON( switchables,json);

@@ -1,21 +1,56 @@
 [
     {
-    "switchGroup": "test",
+    "switchGroup": "Expo",
     "switch on": {
         "include": [
-          "0 1-59/10 10 ? * *"
+          "0 15 11 ? * *"
         ],
         "exclude": [
         ]
       },
     "switch off": {
         "include": [
-          "0 8-59/10 10 ? * *"
+          "0 0 21 ? * *"
         ],
         "exclude": [
         ]
       }
+    },
+  {
+    "switchGroup": "Cafe",
+    "switch on": {
+      "include": [
+        "0 20 11 ? * *"
+      ],
+      "exclude": [
+      ]
+    },
+    "switch off": {
+      "include": [
+        "0 0 21 ? * *"
+      ],
+      "exclude": [
+      ]
     }
+  },
+  {
+    "switchGroup": "DocCentr",
+    "switch on": {
+      "include": [
+        "0 20 11 ? * *"
+      ],
+      "exclude": [
+      ]
+    },
+    "switch off": {
+      "include": [
+        "0 0 21 ? * *"
+      ],
+      "exclude": [
+      ]
+    }
+  }
+  
 ]
 
 

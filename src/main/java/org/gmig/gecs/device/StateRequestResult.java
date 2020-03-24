@@ -4,6 +4,12 @@ package org.gmig.gecs.device;
  * Created by brix isOn 2/27/2018.
  */
 public class StateRequestResult {
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof StateRequestResult))
+            return false;
+        return ((StateRequestResult)o).isOn() == isOn();
+    }
 
     public boolean isOn(){
         return state;
@@ -29,9 +35,9 @@ public class StateRequestResult {
     @Override
     public String toString(){
         if(isOn())
-            return "is On";
+            return "is on";
         else
-            return "is Off";
+            return "is off";
 
     }
 

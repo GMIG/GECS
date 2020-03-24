@@ -1,6 +1,7 @@
 package org.gmig.gecs.factories;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.log4j.Logger;
 import org.gmig.gecs.command.Command;
 import org.gmig.gecs.command.ComplexCommandBuilder;
 import org.gmig.gecs.device.ManagedDevice;
@@ -9,32 +10,26 @@ import org.gmig.gecs.executors.WOLCommandExecutor;
 import org.gmig.gecs.reaction.Reaction;
 import org.gmig.gecs.reaction.ReactionCloseWithSuccess;
 import org.gmig.gecs.reaction.ReactionWrite;
-import org.apache.log4j.Logger;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.textline.LineDelimiter;
-import org.apache.mina.filter.codec.textline.TextLineDecoder;
-import org.apache.mina.filter.codec.textline.TextLineEncoder;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
 /**
  * Created by brix on 4/19/2018.
  */
-public class DatatonFactory extends ManagedDeviceFactory {
+@SuppressWarnings("UnnecessaryLocalVariable")
+public class DatatonFactory extends AbstractManagedDeviceFactory {
     private static final Logger logger = Logger.getLogger(DatatonFactory.class);
 
-    private static ProtocolCodecFilter textFilter = new ProtocolCodecFilter(
-            new TextLineEncoder(Charset.forName("UTF-8"), LineDelimiter.MAC),new TextLineDecoder(Charset.forName("UTF-8"), LineDelimiter.MAC));
 
-    private static TCPCommandExecutor datatonExecutor = new TCPCommandExecutor(textFilter,3039);
-    private static TCPCommandExecutor statusRequestExecutor = new TCPCommandExecutor(textFilter,3039);
-    private static TCPCommandExecutor datatonChecksExecutor = new TCPCommandExecutor(textFilter,3039);
-    private static TCPCommandExecutor firstCheckExecutor = new TCPCommandExecutor(textFilter,3039);
+    private static int datatonPort = 3039;
+    private static final TCPCommandExecutor datatonExecutor = new TCPCommandExecutor(textFilter,datatonPort);
+    private static final TCPCommandExecutor statusRequestExecutor = new TCPCommandExecutor(textFilter,datatonPort);
+    private static final TCPCommandExecutor datatonChecksExecutor = new TCPCommandExecutor(textFilter,datatonPort);
+    private static final TCPCommandExecutor firstCheckExecutor = new TCPCommandExecutor(textFilter,datatonPort);
 
-    private static WOLCommandExecutor wolExecutor = new WOLCommandExecutor();
+    private static final WOLCommandExecutor wolExecutor = new WOLCommandExecutor();
     private static final String okString = "Ready \"5.5.2\" \"WATCHPOINT\" \"WATCHPAX\" true";
     static {
         datatonChecksExecutor.setReconnectTimeMillis(2000);
@@ -43,10 +38,11 @@ public class DatatonFactory extends ManagedDeviceFactory {
         statusRequestExecutor.setReconnectTimeMillis(1000);
         statusRequestExecutor.setMaxReconnectTries(2);
 
-        firstCheckExecutor.setReconnectTimeMillis(20000);
-        firstCheckExecutor.setMaxReconnectTries(2);
+        firstCheckExecutor.setReconnectTimeMillis(30000);
+        firstCheckExecutor.setMaxReconnectTries(4);
 
-        wolExecutor.setIpResendTimeMillis(10000);
+        wolExecutor.setIpResendTimeMillis(15000);
+        wolExecutor.setIpResendTries(5);
     }
 
     @Override
@@ -70,8 +66,9 @@ public class DatatonFactory extends ManagedDeviceFactory {
                          .on(okString,new ReactionCloseWithSuccess()));
 
          Command<?> turnOn = ComplexCommandBuilder.builder()
-                 .addCommand(0,"WoL",wolExecutor.getCommand(IP,0,mac).thenWait(5000))
-                 .addCommand(0, "check", firstCheckExecutor.getCommand(IP,check)).collect(0);
+                 .addCommand(0,"wol",wolExecutor.getCommand(IP,0,mac).thenWait(5000))
+                 .addCommand(0, "check", firstCheckExecutor.getCommand(IP,check))
+                 .collect(0);
 
         HashMap<Object,Reaction> powerOff = Reaction.onConnectionTry(
                  new ReactionWrite("authenticate 1")
@@ -92,11 +89,18 @@ public class DatatonFactory extends ManagedDeviceFactory {
                 .setStateRequestCommand(statusRequestExecutor.getCommand(IP,init))
                 .setCheckCommand(datatonChecksExecutor.getCommand(IP,check))
                 .setSwitchOnCommand(turnOn)
-                .setSwitchOffCommand(datatonExecutor.getCommand(IP,powerOff))
-                .addCommand("status",datatonExecutor.getCommand(IP,status))
-                .setCheckResendTime(60*1000*10)
+                .setSwitchOffCommand(datatonExecutor.getCommand(IP,powerOff).thenWait(35000))
+                .addCommand("get status",datatonExecutor.getCommand(IP,status))
+                .setCheckResendTimeMinutes(3)
                 .build();
         return unit;
+    }
+
+    public void dispose(){
+        datatonExecutor.dispose();
+        statusRequestExecutor.dispose();
+        datatonChecksExecutor.dispose();
+        firstCheckExecutor.dispose();
     }
 
 }

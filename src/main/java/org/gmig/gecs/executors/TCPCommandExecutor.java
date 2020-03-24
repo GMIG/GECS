@@ -1,16 +1,15 @@
 package org.gmig.gecs.executors;
 
-import org.gmig.gecs.command.ArgCommand;
-import org.gmig.gecs.command.Command;
-import org.gmig.gecs.reaction.Reaction;
 import org.apache.log4j.Logger;
-import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.session.DummySession;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LogLevel;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import org.gmig.gecs.command.ArgCommand;
+import org.gmig.gecs.command.Command;
+import org.gmig.gecs.reaction.Reaction;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -20,10 +19,11 @@ public class TCPCommandExecutor {
 
     private static final Logger logger = Logger.getLogger(TCPCommandExecutor.class);
 
-    private NioSocketConnector connector = new NioSocketConnector();
-    private int port;
-    private TCPReactionHandler handler;
-    private int readTimeoutSecondsDefault = 5;
+    private final NioSocketConnector connector = new NioSocketConnector(10);
+    private final int port;
+    private final TCPReactionHandler handler;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final int readTimeoutSecondsDefault = 5;
 
     private int maxReconnectTries = 5;
     private int reconnectTimeMillis = 2000;
@@ -40,31 +40,25 @@ public class TCPCommandExecutor {
 
     public TCPCommandExecutor(ProtocolCodecFilter decodeFilter, int port) {
         this.port = port;
-        try {
-            connector.getFilterChain().addLast("decode", decodeFilter);
-            connector.getFilterChain().addLast("log", new LoggingFilter("TCPCommandExecutor") {
-
-                //This is to disable verbose java.io.IOException stack trace prints
-                @Override
-                public void exceptionCaught(NextFilter nextFilter, IoSession session, Throwable cause) throws Exception {
-                    if (cause instanceof java.io.IOException) {
-                        LogLevel ll = this.getExceptionCaughtLogLevel();
-                        this.setExceptionCaughtLogLevel(LogLevel.NONE);
-                        super.exceptionCaught(nextFilter, session, cause);
-                        this.setExceptionCaughtLogLevel(ll);
-                    } else
-                        super.exceptionCaught(nextFilter, session, cause);
-                }
-            });
-            connector.getSessionConfig().setReaderIdleTime(readTimeoutSecondsDefault);
-            connector.setConnectTimeoutMillis(5000);
-            connector.getSessionConfig().setKeepAlive(false);
-            handler = new TCPReactionHandler();
-            connector.setHandler(handler);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        connector.getFilterChain().addLast("decode", decodeFilter);
+        connector.getFilterChain().addLast("log", new LoggingFilter("TCPCommandExecutor-mina") {
+            //This is to disable verbose java.io.IOException stack trace prints
+            @Override
+            public void exceptionCaught(NextFilter nextFilter, IoSession session, Throwable cause) throws Exception {
+                if (cause instanceof java.io.IOException) {
+                    LogLevel ll = this.getExceptionCaughtLogLevel();
+                    this.setExceptionCaughtLogLevel(LogLevel.NONE);
+                    super.exceptionCaught(nextFilter, session, cause);
+                    this.setExceptionCaughtLogLevel(ll);
+                } else
+                    super.exceptionCaught(nextFilter, session, cause);
+            }
+        });
+        connector.getSessionConfig().setReaderIdleTime(readTimeoutSecondsDefault);
+        connector.setConnectTimeoutMillis(5000);
+        connector.getSessionConfig().setKeepAlive(false);
+        handler = new TCPReactionHandler();
+        connector.setHandler(handler);
     }
 
     public <T> Command<T> getCommand(String hostname, HashMap<Object,Reaction> reactionMap){
@@ -81,21 +75,12 @@ public class TCPCommandExecutor {
 
     public <T> CompletableFuture<T> submit(String hostname, HashMap<Object, Reaction> reactionMap, Object argument) {
         CompletableFuture<T> returnedFuture = new CompletableFuture<>();
-        //this.reactionMap = reactionMap;
-        // handler.singleConnect(this.connector,hostname,port,returnedFuture,this.reactionMap);
-        ConnectRetry retry = new ConnectRetry(() ->
+        new ConnectRetry(() ->
         {
-            ConnectFuture a = null;
-            try {
-                logger.debug(hostname + ":Connecting");
-                a = connector.connect(new InetSocketAddress(hostname, port), (session, connectFuture) -> {
-                    SHelper.setFields(session,reactionMap,hostname,returnedFuture,argument);
-                });
-            } catch (IllegalArgumentException e) {
-                returnedFuture.completeExceptionally(e);
-            }
-            return a;
-        }, ()->{
+            logger.debug(hostname + ":Connecting");
+            return connector.connect(new InetSocketAddress(hostname, port), (session, connectFuture) -> SHelper.setFields(session,reactionMap,hostname,returnedFuture,argument));
+        }, () ->
+        {
             logger.debug(hostname + ":Reconnect timeout");
             IoSession session = new DummySession();
             SHelper.setFields(session,reactionMap,hostname,returnedFuture,argument);

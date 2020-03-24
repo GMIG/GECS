@@ -2,121 +2,89 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.ToggleSwitch?>
 <VBox prefHeight="950.0" prefWidth="1700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <TabPane prefHeight="950.0" prefWidth="1700.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Untitled Tab 1">
-                    <content>
-                        <VBox prefHeight="950.0" prefWidth="1700.0">
-                            <children>
-                                <HBox prefHeight="126.0" prefWidth="1700.0">
-                                    <children>
-                                        <Button id="turnOn" mnemonicParsing="false" prefHeight="70.0" prefWidth="147.0"
-                                                text="Turn on"/>
-                                        <Button id="turnOff" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0"
-                                                text="Button"/>
-                                    </children>
-                                </HBox>
-                                <Pane fx:id="diagPane" prefHeight="654.0" prefWidth="1726.0">
-                                    <children>
-                                        <ImageView fitHeight="590.0" fitWidth="1708.0" layoutY="8.0" pickOnBounds="true"
-                                                   preserveRatio="true">
-                                            <image>
-                                                <Image url="@../../../../../NE/final/Capture1.JPG"/>
-                                            </image>
-                                        </ImageView>
-                                        <Pane layoutX="327.0" layoutY="377.0" prefHeight="37.0" prefWidth="45.0">
-                                            <children>
-                                                <Label layoutX="3.0" layoutY="8.0" text="PR-11.1">
-                                                    <font>
-                                                        <Font name="Tahoma" size="10.0"/>
-                                                    </font>
-                                                </Label>
-                                                <Label layoutX="2.0" layoutY="22.0" text="10.8.4.1">
-                                                    <font>
-                                                        <Font name="Tahoma" size="10.0"/>
-                                                    </font>
-                                                </Label>
-                                            </children>
-                                        </Pane>
-                                        <!--Pane fx:id="diagPane" layoutX="314.0" layoutY="407.0" prefHeight="34.0" prefWidth="35.0">
-                                           <children>
-                                              <Polygon fill="DODGERBLUE" layoutX="2.0" layoutY="12.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0">
-                                                 <points>
-                                                    <Double fx:value="0.0" />
-                                                    <Double fx:value="0.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="0.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="10.0" />
-                                                    <Double fx:value="30.0" />
-                                                    <Double fx:value="0.0" />
-                                                    <Double fx:value="30.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="10.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="20.0" />
-                                                    <Double fx:value="0.0" />
-                                                    <Double fx:value="20.0" />
-                                                 </points>
-                                              </Polygon>
-                                              <Label layoutX="10.0" layoutY="14.0" text="C" />
-                                           </children>
-                                        </Pane-->
-                                    </children>
-                                </Pane>
-                                <AnchorPane prefHeight="300.0" prefWidth="1726.0">
-                                    <children>
-                                        <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                                            <children>
-                                                <AnchorPane fx:id="mapPane" AnchorPane.topAnchor="0.0"
-                                                            AnchorPane.bottomAnchor="0.0">
-                                                </AnchorPane>
-                                                <GridPane hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                                    <columnConstraints>
-                                                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
-                                                        <ColumnConstraints hgrow="SOMETIMES" />
-                                                    </columnConstraints>
-                                                    <rowConstraints>
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                                    </rowConstraints>
-                                                    <children>
-                                                        <Label minWidth="65.0" text="Время включения" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" />
-                                                        <TextField fx:id="txtTurnOnHours" GridPane.columnIndex="1" GridPane.rowIndex="1"  maxWidth = "50" alignment="CENTER" GridPane.halignment ="RIGHT"/>
-                                                        <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                                        <TextField fx:id="txtTurnOnMinutes" GridPane.columnIndex="3" GridPane.rowIndex="1" maxWidth = "50" alignment="CENTER" />
-                                                        <TextField fx:id="txtTurnOffHours" GridPane.columnIndex="1" GridPane.rowIndex="2"  maxWidth = "50" alignment="CENTER" GridPane.halignment ="RIGHT"/>
-                                                        <TextField fx:id="txtTurnOffMinutes" GridPane.columnIndex="3" GridPane.rowIndex="2"  maxWidth = "50" alignment="CENTER"/>
-                                                        <Label minWidth="75.0" text="Время выключения" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" />
-                                                        <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                                        <Label text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                                                        <Label layoutX="132.0" layoutY="20.0" text="" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                                                    </children>
-                                                    <opaqueInsets>
-                                                        <Insets />
-                                                    </opaqueInsets>
-                                                </GridPane>
-                                                <AnchorPane/>
-                                            </children>
-                                        </HBox>
-                                    </children>
-                                </AnchorPane>
-                            </children>
-                        </VBox>
-                    </content>
-                </Tab>
-                <Tab text="Untitled Tab 2"/>
-            </tabs>
-        </TabPane>
-    </children>
+    <TabPane prefHeight="950.0" prefWidth="1700.0" tabClosingPolicy="UNAVAILABLE">
+        <Tab text="Untitled Tab 1">
+            <VBox prefHeight="950.0" prefWidth="1700.0">
+                <HBox prefHeight="126.0" prefWidth="1700.0">
+                    <Button id="turnOn" mnemonicParsing="false" prefHeight="70.0" prefWidth="170.0"
+                            text="Turn on"/>
+                    <Button id="turnOff" mnemonicParsing="false" prefHeight="70.0" prefWidth="170.0"
+                            text="Turn off"/>
+                    <ToggleSwitch id="watchdog" prefHeight="70.0" prefWidth="170.0"
+                                  text="Automatic restart"/>
+                </HBox>
+                <Pane fx:id="diagPane" prefHeight="654.0" prefWidth="1726.0">
+                    <ImageView fitHeight="590.0" fitWidth="1708.0" layoutY="8.0" pickOnBounds="true"
+                               preserveRatio="true">
+                    </ImageView>
+                    <Pane layoutX="327.0" layoutY="377.0" prefHeight="37.0" prefWidth="45.0">
+                        <Label layoutX="3.0" layoutY="8.0" text="PR-11.1">
+                            <font>
+                                <Font name="Tahoma" size="10.0"/>
+                            </font>
+                        </Label>
+                        <Label layoutX="2.0" layoutY="22.0" text="10.8.4.1">
+                            <font>
+                                <Font name="Tahoma" size="10.0"/>
+                            </font>
+                        </Label>
+                    </Pane>
+                </Pane>
+                <AnchorPane prefHeight="300.0" prefWidth="1726.0">
+                    <HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <AnchorPane fx:id="mapPane" AnchorPane.topAnchor="0.0"
+                                    AnchorPane.bottomAnchor="0.0">
+                        </AnchorPane>
+                        <GridPane hgap="5.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES"
+                                                   maxWidth="5.0" minWidth="5.0" prefWidth="5.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES"/>
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                            </rowConstraints>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <Label minWidth="65.0" text="Время включения"
+                                   GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES"
+                                   GridPane.rowIndex="1"/>
+                            <TextField fx:id="txtTurnOnHours" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="1" maxWidth="50" alignment="CENTER"
+                                       GridPane.halignment="RIGHT"/>
+                            <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                            <TextField fx:id="txtTurnOnMinutes" GridPane.columnIndex="3"
+                                       GridPane.rowIndex="1" maxWidth="50" alignment="CENTER"/>
+                            <TextField fx:id="txtTurnOffHours" GridPane.columnIndex="1"
+                                       GridPane.rowIndex="2" maxWidth="50" alignment="CENTER"
+                                       GridPane.halignment="RIGHT"/>
+                            <TextField fx:id="txtTurnOffMinutes" GridPane.columnIndex="3"
+                                       GridPane.rowIndex="2" maxWidth="50" alignment="CENTER"/>
+                            <Label minWidth="75.0" text="Время выключения"
+                                   GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES"
+                                   GridPane.rowIndex="2"/>
+                            <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                            <Label GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                                   GridPane.valignment="BOTTOM"/>
+                            <Label layoutX="132.0" layoutY="20.0"
+                                   GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                                   GridPane.valignment="BOTTOM"/>
+                        </GridPane>
+                        <AnchorPane/>
+                    </HBox>
+                </AnchorPane>
+            </VBox>
+        </Tab>
+        <Tab text="Untitled Tab 2"/>
+    </TabPane>
 </VBox>

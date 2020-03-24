@@ -1,43 +1,42 @@
 package org.gmig.gecs.factories;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.log4j.Logger;
 import org.gmig.gecs.device.ManagedDevice;
 import org.gmig.gecs.executors.TCPCommandExecutor;
 import org.gmig.gecs.reaction.Reaction;
 import org.gmig.gecs.reaction.ReactionCloseWithSuccess;
 import org.gmig.gecs.reaction.ReactionWrite;
 import org.gmig.gecs.reaction.ReactionWriteArgument;
-import org.apache.log4j.Logger;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.textline.LineDelimiter;
-import org.apache.mina.filter.codec.textline.TextLineDecoder;
-import org.apache.mina.filter.codec.textline.TextLineEncoder;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 
 /**
  * Created by brix on 4/19/2018.
  */
-public class SharpTVFactory extends ManagedDeviceFactory {
-    private static final Logger logger = Logger.getLogger(DatatonFactory.class);
+public class SharpTVFactory extends AbstractManagedDeviceFactory {
+    private static final Logger logger = Logger.getLogger(SharpTVFactory.class);
 
-    private static ProtocolCodecFilter textFilter = new ProtocolCodecFilter(
-            new TextLineEncoder(Charset.forName("UTF-8"), LineDelimiter.MAC), new TextLineDecoder(Charset.forName("UTF-8"), LineDelimiter.MAC));
-    private static TCPCommandExecutor sharpPowerExecutor = new TCPCommandExecutor(textFilter, 10002);
-    private static TCPCommandExecutor sharpCheckExecutor = new TCPCommandExecutor(textFilter, 10002);
+    private static int sharpTVPort = 10002;
+    private static TCPCommandExecutor sharpPowerExecutor = new TCPCommandExecutor(textFilter, sharpTVPort);
+    private static TCPCommandExecutor sharpCheckExecutor = new TCPCommandExecutor(textFilter, sharpTVPort);
 
     @Override
     protected ManagedDevice buildType(JsonNode jsonNode, ManagedDevice.ManagedDeviceBuilder builder) throws IOException {
-        return build(jsonNode.get("ip").asText(),builder);
+        return buildSharpTV(jsonNode.get("ip").asText(),builder);
+    }
+
+    @Override
+    public void dispose() {
+
     }
 
     public static ManagedDevice build(String IP) throws IllegalArgumentException {
-        return build(IP,ManagedDevice.newBuilder().setName(IP));
+        return buildSharpTV(IP,ManagedDevice.newBuilder().setName(IP));
     }
 
-    public static ManagedDevice build(String IP,ManagedDevice.ManagedDeviceBuilder builder) throws IllegalArgumentException {
+    public static ManagedDevice buildSharpTV(String IP,ManagedDevice.ManagedDeviceBuilder builder) throws IllegalArgumentException {
 
         HashMap<Object, Reaction> init = Reaction.onConnectionSuccess(
                 new ReactionWrite("POWR????")
@@ -76,11 +75,11 @@ public class SharpTVFactory extends ManagedDeviceFactory {
                 .setCheckCommand(sharpCheckExecutor.getCommand(IP, check))
                 .setSwitchOnCommand(sharpPowerExecutor.getCommand(IP,powerOn).thenWait(40000))
                 .setSwitchOffCommand(sharpPowerExecutor.getCommand(IP, powerOff).thenWait(3000))
-                .addArgCommand("vol",sharpCheckExecutor.getArgCommand(IP,setVolume))
-                .addCommand("Turn on POWR 1",sharpCheckExecutor.getCommand(IP,turnOnPowrOn).thenWait(3000))
+                .addArgCommand("volume",sharpCheckExecutor.getArgCommand(IP,setVolume))
+                .addCommand("turn on RSPW2",sharpCheckExecutor.getCommand(IP,turnOnPowrOn).thenWait(3000))
+                .setCheckResendTimeMinutes(2)
                 .build();
         //unit.getArgCommand("vol").exec(10);
-        unit.manager.setDelayMillis(100000);
         return unit;
     }
 }

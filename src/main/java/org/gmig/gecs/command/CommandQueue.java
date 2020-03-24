@@ -7,23 +7,25 @@ import java.util.concurrent.*;
  */
 public class CommandQueue {
     private CompletableFuture<?> last = CompletableFuture.completedFuture(null);
-    private LinkedBlockingQueue <Command<?>> queue = new LinkedBlockingQueue<>();
+    private final LinkedBlockingQueue <Command<?>> queue = new LinkedBlockingQueue<>();
 
     public void setCommandTimeout(int commandTimeout) {
         this.commandTimeout = commandTimeout;
     }
+    public final ConcurrentLinkedQueue<Runnable> queueEmpty = new ConcurrentLinkedQueue<>();
+    public final ConcurrentLinkedQueue<Runnable> queueNotEmpty = new ConcurrentLinkedQueue<>();
 
     private int commandTimeout = 5*60*1000;
 
 
-    ScheduledExecutorService timoutListener = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService timoutListener = Executors.newSingleThreadScheduledExecutor();
 
     private synchronized void callbackOnDone (){
             Command next = queue.poll();
             if (next != null) {
                 execute(next);
             } else {
-                // Callback empty
+                queueEmpty.forEach(Runnable::run);
             }
     }
 
@@ -38,11 +40,12 @@ public class CommandQueue {
     }
 
     public synchronized <T>CompletableFuture<T> add(Command<T> cmd){
+        queueNotEmpty.forEach(Runnable::run);
         CompletableFuture<T> commandFuture= new CompletableFuture<>();
         Command<T> cmdWithFutureCallback = ()-> {
             CompletableFuture<T> future = cmd.get();
             timoutListener.schedule(()->{
-                commandFuture.completeExceptionally(new Throwable("Command queue:Command timeout"));
+                //commandFuture.completeExceptionally(new Throwable("Command queue:Command timeout"));
                 future.completeExceptionally(new Throwable("Command queue:Command timeout"));
             },commandTimeout, TimeUnit.MILLISECONDS);
             future.whenComplete((o,t)->{

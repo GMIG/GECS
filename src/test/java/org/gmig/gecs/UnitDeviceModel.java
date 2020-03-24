@@ -30,7 +30,7 @@ public class UnitDeviceModel {
 
     private static final Logger logger = Logger.getLogger(UnitDeviceModel.class);
     private InetSocketAddress testAddr;
-    private static ProtocolCodecFilter textfilter = new ProtocolCodecFilter(
+    private static final ProtocolCodecFilter textfilter = new ProtocolCodecFilter(
             new TextLineEncoder(Charset.forName("UTF-8"), LineDelimiter.MAC),new TextLineDecoder(Charset.forName("UTF-8"), LineDelimiter.MAC));
     private ProtocolCodecFilter serializationFilter = new ProtocolCodecFilter(
             new ObjectSerializationEncoder(), new ObjectSerializationDecoder());

@@ -33,7 +33,6 @@ public class SwitchGroupScheduler {
     private static HashMap<String, Command<?>> commandMap = new HashMap<>();
 
     private static final Logger logger = Logger.getLogger(SwitchGroupScheduler.class);
-    private final SchedulerFactory schedFact;
     private final Scheduler scheduler;
     private final HashSet<SwitchGroup> switchGroups;
     public static SimpleDateFormat dateFormatDecoder = new SimpleDateFormat("d M y");
@@ -47,7 +46,7 @@ public class SwitchGroupScheduler {
         props.setProperty("org.quartz.jobStore.class", "org.quartz.simpl.RAMJobStore");
         props.setProperty("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
         props.setProperty("org.quartz.threadPool.threadCount", "10");
-        schedFact = new StdSchedulerFactory(props);
+        SchedulerFactory schedFact = new StdSchedulerFactory(props);
         scheduler = schedFact.getScheduler();
         this.switchGroups = switchGroups;
     }
@@ -193,6 +192,10 @@ public class SwitchGroupScheduler {
         gen.useDefaultPrettyPrinter();
         gen.writeTree(node);
         gen.close();
+    }
+
+    public void dispose() throws SchedulerException {
+        scheduler.shutdown();
     }
 
 }

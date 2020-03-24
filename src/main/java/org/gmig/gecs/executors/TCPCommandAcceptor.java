@@ -1,9 +1,5 @@
 package org.gmig.gecs.executors;
 
-import org.gmig.gecs.device.Device;
-import org.gmig.gecs.reaction.Reaction;
-import org.gmig.gecs.reaction.ReactionDoNothing;
-import org.apache.log4j.Logger;
 import org.apache.mina.core.session.DefaultIoSessionDataStructureFactory;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.core.session.IoSessionAttributeMap;
@@ -11,6 +7,9 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.logging.LogLevel;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+import org.gmig.gecs.device.Device;
+import org.gmig.gecs.reaction.Reaction;
+import org.gmig.gecs.reaction.ReactionDoNothing;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -18,13 +17,14 @@ import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Created by brix on 8/1/2018.
+ *
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class TCPCommandAcceptor {
 
     public final HashSet<Device> sources = new HashSet<>();
 
-    private static final Logger logger = Logger.getLogger(TCPCommandAcceptor.class);
+    //private static final Logger logger = Logger.getLogger(TCPCommandAcceptor.class);
     private int maxReconnectTries = 5;
     private int reconnectTimeMillis = 2000;
     private int readTimeoutSecondsDefault = 5;
@@ -33,13 +33,13 @@ public class TCPCommandAcceptor {
     private NioSocketAcceptor acceptor = new NioSocketAcceptor();
     private int port;
     private TCPReactionHandler handler;
-    ReactionDoNothing root = new ReactionDoNothing();
+    private ReactionDoNothing root = new ReactionDoNothing();
 
     public TCPCommandAcceptor(ProtocolCodecFilter decodeFilter, int port) {
         this.port = port;
         try {
             acceptor.getFilterChain().addLast("decode", decodeFilter);
-            acceptor.getFilterChain().addLast("log", new LoggingFilter("TCPCommandAcceptor") {
+            acceptor.getFilterChain().addLast("log", new LoggingFilter("TCPCommandAcceptor-mina") {
 
                 //This is to disable verbose java.io.IOException stack trace prints
                 @Override
@@ -90,7 +90,7 @@ public class TCPCommandAcceptor {
         }
     }
 
-    public void addRule(HashMap<Object,Reaction> rule){
+    private void addRule(HashMap<Object, Reaction> rule){
         root.addMap(rule);
     }
 
@@ -98,6 +98,10 @@ public class TCPCommandAcceptor {
         HashMap<Object,Reaction> map = new HashMap<>();
         map.put(o,r);
         addRule(map);
+    }
+
+    public void dispose(){
+        acceptor.dispose(true);
     }
 /*
     public void addRule(String Source, String signal, Function<Object,Object> action){

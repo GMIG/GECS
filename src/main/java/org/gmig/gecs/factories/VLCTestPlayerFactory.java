@@ -1,6 +1,7 @@
 package org.gmig.gecs.factories;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.log4j.Logger;
 import org.gmig.gecs.device.ManagedDevice;
 import org.gmig.gecs.executors.TCPCommandExecutor;
 import org.gmig.gecs.executors.WOLCommandExecutor;
@@ -8,31 +9,23 @@ import org.gmig.gecs.reaction.Reaction;
 import org.gmig.gecs.reaction.ReactionCloseWithError;
 import org.gmig.gecs.reaction.ReactionCloseWithSuccess;
 import org.gmig.gecs.reaction.ReactionWrite;
-import org.apache.log4j.Logger;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.textline.LineDelimiter;
-import org.apache.mina.filter.codec.textline.TextLineDecoder;
-import org.apache.mina.filter.codec.textline.TextLineEncoder;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.HashMap;
 
 /**
  * Created by brix isOn 3/16/2018.
  */
-public class VLCTestPlayerFactory extends ManagedDeviceFactory {
+public class VLCTestPlayerFactory extends AbstractManagedDeviceFactory {
 
     private static final Logger logger = Logger.getLogger(ProjectorFactory.class);
 
-    private static ProtocolCodecFilter textFilter = new ProtocolCodecFilter(
-            new TextLineEncoder(Charset.forName("UTF-8"), LineDelimiter.MAC),new TextLineDecoder(Charset.forName("UTF-8"), LineDelimiter.MAC));
     //private static TCPCommandExecutor checkExecutor = new TCPCommandExecutor(textFilter,11211);
-    private static TCPCommandExecutor checkExecutor = new TCPCommandExecutor(textFilter,10203);
-    private static TCPCommandExecutor initRequestExecutor = new TCPCommandExecutor(textFilter,10203);
+    private static final TCPCommandExecutor checkExecutor = new TCPCommandExecutor(textFilter,10203);
+    private static final TCPCommandExecutor initRequestExecutor = new TCPCommandExecutor(textFilter,10203);
 
-    private static TCPCommandExecutor powerCommandExecutor = new TCPCommandExecutor(textFilter,10203);
-    protected static WOLCommandExecutor wolExecutor = new WOLCommandExecutor();
+    private static final TCPCommandExecutor powerCommandExecutor = new TCPCommandExecutor(textFilter,10203);
+    protected static final WOLCommandExecutor wolExecutor = new WOLCommandExecutor();
 
     static {
         checkExecutor.setReconnectTimeMillis(5000);
@@ -46,6 +39,16 @@ public class VLCTestPlayerFactory extends ManagedDeviceFactory {
     protected ManagedDevice buildType(JsonNode jsonNode, ManagedDevice.ManagedDeviceBuilder builder) throws IOException {
         return build(jsonNode.get("ip").asText(),jsonNode.get("mac").asText(),builder);
     }
+
+    @Override
+    public void dispose() {
+         checkExecutor.dispose();
+         initRequestExecutor.dispose() ;
+         powerCommandExecutor.dispose() ;
+        wolExecutor.dispose() ;
+
+    }
+
     public static ManagedDevice build(String IP,String mac) throws IllegalArgumentException {
         return build(IP,mac, ManagedDevice.newBuilder().setName(IP));
     }

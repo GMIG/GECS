@@ -28,17 +28,19 @@ import java.util.concurrent.*;
 
 import static org.junit.Assert.assertTrue;
 
+@SuppressWarnings("ConstantConditions")
 public class TCPCommandExecutorTest {
-    TCPCommandExecutor c;
+    private TCPCommandExecutor c;
 
     private static final Logger logger = Logger.getLogger(TCPCommandExecutorTest.class);
     private NioSocketAcceptor server = new NioSocketAcceptor();
     private NioSocketAcceptor server2;
+    @SuppressWarnings("FieldCanBeLocal")
     private InetSocketAddress testAddr;
-    private ProtocolCodecFilter textfilter = new ProtocolCodecFilter(
+    private final ProtocolCodecFilter textfilter = new ProtocolCodecFilter(
                     new TextLineEncoder(),
                     new TextLineDecoder());
-    private ProtocolCodecFilter serializationFilter = new ProtocolCodecFilter(
+    private final ProtocolCodecFilter serializationFilter = new ProtocolCodecFilter(
             new ObjectSerializationEncoder(), new ObjectSerializationDecoder());
 
 
@@ -88,7 +90,7 @@ public class TCPCommandExecutorTest {
 
             HashMap<Object,Reaction> reactionMap = Reaction.onConnectionSuccess(new ReactionWrite("hio").on("class java.io.IOException",new ReactionCloseWithSuccess()));
             TCPCommandExecutor ooooas = new TCPCommandExecutor(textfilter,11212);
-            Field field = null;
+            Field field;
             field = TCPCommandExecutor.class.getDeclaredField("connector");
             field.setAccessible(true);
             field.get(ooooas);
@@ -116,7 +118,7 @@ public class TCPCommandExecutorTest {
 
             HashMap<Object,Reaction> reactionMap = Reaction.onConnectionSuccess(new ReactionWrite("hio"));
             TCPCommandExecutor ooooas = new TCPCommandExecutor(textfilter,11212);
-            Field field = null;
+            Field field;
             field = TCPCommandExecutor.class.getDeclaredField("connector");
             field.setAccessible(true);
             field.get(ooooas);
@@ -154,7 +156,7 @@ public class TCPCommandExecutorTest {
 
     }
 
-    public CompletableFuture testComplexQueue(String resp) throws IOException {
+    private CompletableFuture testComplexQueue(String resp) throws IOException {
         logger.debug("Binding");
         server.setHandler(new IoHandlerAdapter(){
             @Override
@@ -180,7 +182,7 @@ public class TCPCommandExecutorTest {
 
         return c.submit("127.0.0.1",chain);
     }
-    HashMap<Object,Reaction> chain;
+    private HashMap<Object,Reaction> chain;
     @Test
     public void testMultiple() throws Exception {
         logger.debug("Binding");
@@ -371,7 +373,7 @@ public class TCPCommandExecutorTest {
         }
     }
 
-    class Lamp{
+    private class Lamp{
         String myName;
 
         void turnOn(){
@@ -406,8 +408,8 @@ public class TCPCommandExecutorTest {
             server2.bind(new InetSocketAddress("127.0.0.2",11212));
 
             ReactionCloseWithSuccess r = new ReactionCloseWithSuccess();
-            r.afterCompletionAccept((msg)-> {logger.debug(msg);});
-            r.afterCompletionAccept((msg)-> {logger.debug(" dixi ");});
+            r.afterCompletionAccept((msg)-> logger.debug(msg));
+            r.afterCompletionAccept((msg)-> logger.debug(" dixi "));
 
             HashMap<Object,Reaction> reactionMap = Reaction.onConnectionSuccess(r);
             c = new TCPCommandExecutor(textfilter,11212);
@@ -421,9 +423,6 @@ public class TCPCommandExecutorTest {
             logger.debug(e.getCause());
             throw (IllegalStateException) e.getCause();
         }
-        finally {
-        }
-
     }
 
 

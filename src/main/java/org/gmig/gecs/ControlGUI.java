@@ -1,5 +1,7 @@
-package org.gmig.gecs;/**
- * Created by brix on 5/8/2018.
+package org.gmig.gecs;
+
+/**
+ *
  */
 
 import javafx.application.Application;
@@ -15,18 +17,28 @@ import java.text.ParseException;
 
 public class ControlGUI extends Application {
 
+    Loader l = new Loader();
 
     public static void main(String[] args) {
         launch(args);
     }
     @Override
     public void start(Stage primaryStage) throws IOException, ClassNotFoundException, InterruptedException, ParseException, SchedulerException {
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("mainFrame.fxml"));
-        Scene scene = new Scene(loader.load());
-        TabPane root = (TabPane) scene.lookup("#tabs");
-        Loader l = new Loader();
-        l.load(root);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("mainFrame.fxml"));
+            Scene scene = new Scene(loader.load());
+            TabPane root = (TabPane) scene.lookup("#tabs");
+            l.load(root);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
+    @Override
+    public void stop(){
+        l.dispose();
+    }
+
 }

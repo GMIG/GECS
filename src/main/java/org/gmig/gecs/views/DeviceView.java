@@ -1,54 +1,65 @@
 package org.gmig.gecs.views;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.gmig.gecs.SourcesServer;
-import org.gmig.gecs.command.ListenableCommand;
-import org.gmig.gecs.device.Device;
-import org.gmig.gecs.device.StandardCommands;
-import org.gmig.gecs.device.StateRequestResult;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.gmig.gecs.SourcesServer;
+import org.gmig.gecs.command.CommandQueue;
+import org.gmig.gecs.command.ListenableCommand;
+import org.gmig.gecs.device.Device;
+import org.gmig.gecs.device.StandardCommands;
+import org.gmig.gecs.device.StateRequestResult;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.stream.Collectors;
 
 /**
- * Created by brix on 5/10/2018.
+ *
  */
 public class DeviceView {
     private Polygon iconPolygon;
     private Label iconLetter;
     private Pane icon;
 
-    private Pane labels;
-    private Label name;
-    private Label IP;
+    private Pane labels = new Pane();
 
-    private Parent infoWindow;
     private Stage stage = new Stage();
 
     private TextArea logField;
-    private Device device;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    private LinkedList<String> logs = new LinkedList<>();
+
+
+    private LinkedBlockingQueue<String> logs = new LinkedBlockingQueue<>();
     private void addToLog(String str){
-        if(logs.size() > 20)
-            logs.removeLast();
-        logs.push(LocalDateTime.now()+":"+str);
+        if(logs.size() > 100)
+            logs.poll();
+        logs.add(LocalDateTime.now().format(formatter)+":"+str);
     }
 
 
@@ -60,19 +71,21 @@ public class DeviceView {
     }
 
     public DeviceView(Device device, JsonNode viewJson, JsonNode types) throws ClassNotFoundException, IOException {
-
-        this.device = device;
-        name = new Label(device.getName());
-        IP = new Label(device.getData("IP"));
-        IP.setLayoutY(labelToText(name).getLayoutBounds().getHeight() + 3);
-        double width = Math.max(labelToText(name).getLayoutBounds().getWidth(),labelToText(IP).getLayoutBounds().getWidth());
-        double height = labelToText(IP).getLayoutY() + labelToText(IP).getLayoutBounds().getHeight();
-        labels = new Pane(name,IP);
-        labels.setMouseTransparent(true);
-        labels.setPrefWidth(width);
-        labels.setPrefHeight(height);
-        labels.setLayoutX(viewJson.get("x-label").doubleValue());
-        labels.setLayoutY(viewJson.get("y-label").doubleValue());
+        Label name = new Label(device.getName());
+        if(device.getName().contains("R1") || device.getName().contains("R2")) {
+            name.setFont(Font.font("System", 11));
+            Label IP = new Label(device.getDescription());
+            IP.setFont(Font.font("System", 11));
+            IP.setLayoutY(labelToText(name).getLayoutBounds().getHeight() + 1);
+            double width = Math.max(labelToText(name).getLayoutBounds().getWidth(), labelToText(IP).getLayoutBounds().getWidth());
+            double height = labelToText(IP).getLayoutY() + labelToText(IP).getLayoutBounds().getHeight();
+            labels = new Pane(name, IP);
+            labels.setMouseTransparent(true);
+            labels.setPrefWidth(width);
+            labels.setPrefHeight(height);
+            labels.setLayoutX(viewJson.get("x-label").doubleValue());
+            labels.setLayoutY(viewJson.get("y-label").doubleValue());
+        }
         String type = viewJson.get("type").asText();
 
         for (JsonNode refType : types) {
@@ -82,6 +95,8 @@ public class DeviceView {
                     iconPolygon.getPoints().add(val.asDouble());
                 }
                 iconLetter = new Label(refType.get("letter").asText());
+                iconLetter.setLayoutX(iconPolygon.getPoints().stream().max(Double::compareTo).get()/4.);
+                //iconLetter.setLayoutY(iconPolygon.getPoints().stream().max(Double::compareTo).get()/4.);
             }
         }
         if(iconPolygon==null) {
@@ -94,7 +109,7 @@ public class DeviceView {
         icon.setPrefHeight(iconPolygon.getLayoutBounds().getHeight());
         icon.setLayoutX(viewJson.get("x-icon").doubleValue());
         icon.setLayoutY(viewJson.get("y-icon").doubleValue());
-        icon.setRotate(viewJson.get("rot").doubleValue());
+        iconPolygon.setRotate(viewJson.get("rot").doubleValue());
         ContextMenu menu = new ContextMenu();
         for (Map.Entry<String, ? extends ListenableCommand<?>> entry : device.getCommandList().entrySet()) {
             MenuItem item = new MenuItem(entry.getKey());
@@ -104,10 +119,19 @@ public class DeviceView {
             });
             menu.getItems().add(item);
             String commandID = entry.getKey();
+            //if(!entry.getKey().equals(StandardCommands.check.name())){
             entry.getValue().started.add(()->showInfo(commandID+":"+"begin"));
             entry.getValue().success.add((res)->showInfo(commandID+":"+"success"+":"+res));
             entry.getValue().exception.add((ex)->showInfo(commandID+":"+"error"+":"+ex));
         }
+
+        updateTooltipBehavior(0,20000,0,true);
+        String IP = "";
+        if(device.getDataList().containsKey("IP"))
+            IP=(String)device.getData("IP");
+        Tooltip tp = new Tooltip(device.getName()+"\n"+device.getDescription()+"\n"+IP);
+        Tooltip.install(icon, tp);
+
         MenuItem info = new MenuItem("INFO");
         info.setOnAction(e -> stage.show());
         menu.getItems().add(info);
@@ -121,6 +145,12 @@ public class DeviceView {
         //TODO: refactor this
         if(device.getFactoryType().equals(SourcesServer.class)) {
             device.getArgCommandList().values().forEach((c)->c.success.add(this::setActive));
+        }
+
+        if(device.getDataList().containsKey("command queue")){
+            ((CommandQueue)device.getData("command queue")).queueEmpty.add(this::setQueueEmpty);
+            ((CommandQueue)device.getData("command queue")).queueNotEmpty.add(this::setQueueNotEmpty);
+
         }
 
         if(device.getCommandList().keySet().contains(StandardCommands.init.name())) {
@@ -145,12 +175,18 @@ public class DeviceView {
             off.exception.add(this::setError);
             off.success.add(this::setOff);
         }
+        if(device.getCommandList().keySet().contains(StandardCommands.checkedRestart.name())) {
+            ListenableCommand<?> restart = device.getCommand(StandardCommands.checkedRestart.name());
+            restart.exception.add(this::setError);
+            restart.success.add(this::setOn);
+        }
+
 
         stage.setTitle(device.getName());
         stage.setOnCloseRequest((e)->{e.consume();stage.hide();});
-        infoWindow = FXMLLoader.load(getClass().getClassLoader().getResource("deviceInfo.fxml"));
+        Parent infoWindow = FXMLLoader.load(getClass().getClassLoader().getResource("deviceInfo.fxml"));
         ((Label) infoWindow.lookup("#name")).setText(device.getName());
-        ((TextField) infoWindow.lookup("#ip")).setText(device.getData("IP"));
+        ((TextField) infoWindow.lookup("#ip")).setText((String)device.getData("IP"));
         ((TextField) infoWindow.lookup("#description")).setText(device.getDescription());
         ((TextField) infoWindow.lookup("#factory")).setText(device.getFactoryType().getSimpleName());
         stage.setScene(new Scene(infoWindow, 550, 600));
@@ -161,27 +197,58 @@ public class DeviceView {
 
     public void addToPane(Pane root){
         root.getChildren().addAll(icon,labels);
+
     }
 
     private void showInfo(String str){
         addToLog(str);
         Platform.runLater(()-> {
             logField.clear();
-            logs.forEach((it) -> logField.appendText(it + "\n"));
+           // logField.setScrollTop(0);
+            List<String> collect = logs.stream().collect(Collectors.toList());
+            Collections.reverse(collect);
+            collect.forEach((it) -> logField.appendText(it + "\n"));
         });
     }
 
-    public void setOn(Object val){
+    private static void updateTooltipBehavior(double openDelay, double visibleDuration,
+                                              double closeDelay, boolean hideOnExit) {
+        try {
+            // Get the non public field "BEHAVIOR"
+            Field fieldBehavior = Tooltip.class.getDeclaredField("BEHAVIOR");
+            // Make the field accessible to be able to get and set its value
+            fieldBehavior.setAccessible(true);
+            // Get the value of the static field
+            Object objBehavior = fieldBehavior.get(null);
+            // Get the constructor of the private static inner class TooltipBehavior
+            Constructor<?> constructor = objBehavior.getClass().getDeclaredConstructor(
+                    Duration.class, Duration.class, Duration.class, boolean.class
+            );
+            // Make the constructor accessible to be able to invoke it
+            constructor.setAccessible(true);
+            // Create a new instance of the private static inner class TooltipBehavior
+            Object tooltipBehavior = constructor.newInstance(
+                    new Duration(openDelay), new Duration(visibleDuration),
+                    new Duration(closeDelay), hideOnExit
+            );
+            // Set the new instance of TooltipBehavior
+            fieldBehavior.set(null, tooltipBehavior);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private void setOn(Object val){
         Platform.runLater(()->iconPolygon.setFill(Color.LIMEGREEN));
     }
-    public void setOff(Object val){
+    private void setOff(Object val){
         Platform.runLater(()->iconPolygon.setFill(Color.BLACK));
     }
-    public void setError(Throwable throwable){
+    private void setError(Throwable throwable){
         Platform.runLater(()->iconPolygon.setFill(Color.ORANGERED));
     }
 
-    public void setActive(Object val){
+    private void setActive(Object val){
         Platform.runLater(()-> {
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), (e) -> iconPolygon.setFill(Color.BLUE)),
                     new KeyFrame(Duration.seconds(1), (e) -> iconPolygon.setFill(Color.LIMEGREEN)));
@@ -190,4 +257,10 @@ public class DeviceView {
         });
     }
 
+    private void setQueueNotEmpty(){
+        Platform.runLater(()->iconLetter.setBackground(new Background(new BackgroundFill(Color.ANTIQUEWHITE, CornerRadii.EMPTY, Insets.EMPTY))));
+    }
+    private void setQueueEmpty(){
+        Platform.runLater(()->iconLetter.setBackground(Background.EMPTY));
+    }
 }

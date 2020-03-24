@@ -77,7 +77,7 @@ public class TCPReactionHandler extends IoHandlerAdapter  {
     public void sessionOpened(IoSession session) throws InterruptedException {
         processEvent(session,connectionCreatedID);}
 
-    public void connectionFail(IoSession session) {
+    void connectionFail(IoSession session) {
         processEvent(session,connectionNotCreatedID);
     }
 

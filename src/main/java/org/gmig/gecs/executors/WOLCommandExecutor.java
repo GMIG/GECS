@@ -23,8 +23,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class WOLCommandExecutor extends IoHandlerAdapter {
     private static final Logger logger = Logger.getLogger(WOLCommandExecutor.class);
     private int subnetLevel = 2;
-    private int ipResendTimeMillis = 5000;
-    private int ipResendTries = 5;
+    private int ipResendTimeMillis = 10000;
+    private int ipResendTries = 4;
 
     public int getSubnetLevel() {return subnetLevel;}
     public void setSubnetLevel(int subnetLevel) {this.subnetLevel = subnetLevel;}
@@ -40,7 +40,7 @@ public class WOLCommandExecutor extends IoHandlerAdapter {
         connector.getSessionConfig().setReuseAddress(false);
     }
 
-    private NioDatagramConnector connector = new NioDatagramConnector(50);
+    private NioDatagramConnector connector = new NioDatagramConnector(100);
 
     public Command<Void> getCommand(String magicPacketAddressStr, int magicPacketPort, String mac) {
         return ()->sendWAL( magicPacketAddressStr,  magicPacketPort,  mac);
@@ -117,6 +117,11 @@ public class WOLCommandExecutor extends IoHandlerAdapter {
         logger.warn(SHelper.getIP(session)+":Apache MINA error " + cause);
         Throwable wrappedIP = new Throwable(SHelper.getIP(session)+":Apache MINA error "+cause,cause);
         SHelper.getFuture(session).completeExceptionally(wrappedIP);
+    }
+
+    public void dispose(){
+        //connector.dispose();
+        connector.dispose(false);
     }
 
 

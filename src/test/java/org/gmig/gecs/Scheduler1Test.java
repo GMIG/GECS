@@ -27,6 +27,11 @@ public class Scheduler1Test {
         HashSet<SwitchGroup> switchGroups = new HashSet<>();
         switchGroups.add(SwitchGroup.newBuilder().addSwitchable("sw",new Switchable(){
             @Override
+            public ListenableCommand<?> getCommand(String ID) {
+                return null;
+            }
+
+            @Override
             public ListenableCommand<?> switchOnCmd() {
                 return new ListenableCommand<Void>(()->{logger.debug("Firing SwitchOn");return CompletableFuture.completedFuture(null);},"switchOn");
             }
@@ -43,6 +48,7 @@ public class Scheduler1Test {
             public Set<Switchable> getChildren() {
                 return null;
             }
+
 
         }).setName("mainExposition").build());
         SwitchGroupScheduler s = new SwitchGroupScheduler(switchGroups);

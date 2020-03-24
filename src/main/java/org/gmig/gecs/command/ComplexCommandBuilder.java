@@ -22,14 +22,21 @@ public class ComplexCommandBuilder {
 
     private final LinkedHashMap<Integer,HashMap<String,Command<?>>> commandStructure = new LinkedHashMap<>();
 
-    public ComplexCommandBuilder addCommand(int where,String id,Command<?> cmd){
+    /*public ComplexCommandBuilder addCommand(int where,String id,Command<?> cmd){
+        if (!commandStructure.containsKey(where)) {
+            commandStructure.put(where, new HashMap<>());
+        }
+        commandStructure.get(where).put(id,cmd);
+        return this;
+    }*/
+    public <T>ComplexCommandBuilder addCommand(int where,String id,Command<T> cmd){
         if (!commandStructure.containsKey(where)) {
             commandStructure.put(where, new HashMap<>());
         }
         commandStructure.get(where).put(id,cmd);
         return this;
     }
-    private LinkedHashMap<Integer, Command<HashMap<String, ?>>> cmds = new LinkedHashMap<>();
+    private final LinkedHashMap<Integer, Command<HashMap<String, ?>>> cmds = new LinkedHashMap<>();
 
 
     private Command<HashMap<String,?>> join(Command<HashMap<String, ?>> old, int i, LinkedHashMap<Integer, HashMap<String, ?>> result){
@@ -96,6 +103,7 @@ public class ComplexCommandBuilder {
             return resultFuture;
         };
     }
+    @SuppressWarnings("SameParameterValue")
     public Command <HashMap<String,?>> parallel(int i) {
         return ()->{
             HashMap<String, Object> result = new HashMap<>();
@@ -111,9 +119,7 @@ public class ComplexCommandBuilder {
             }
             CompletableFuture<HashMap<String, ?>> resultFuture = new CompletableFuture<>();
 
-            CompletableFuture.allOf(futuresSet.toArray(new CompletableFuture[futuresSet.size()])).whenComplete((o,t)->{
-                    resultFuture.complete(result);
-            });
+            CompletableFuture.allOf(futuresSet.toArray(new CompletableFuture[futuresSet.size()])).whenComplete((o,t)-> resultFuture.complete(result));
             return resultFuture;
         };
     }

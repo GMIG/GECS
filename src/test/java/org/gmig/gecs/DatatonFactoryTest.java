@@ -25,8 +25,8 @@ public class DatatonFactoryTest {
         DatatonFactory f = new DatatonFactory();
 
         StructureReader reader = new StructureReader();
-        reader.factories.add(new DatatonFactory());
-        ManagedDevice p1 = reader.loadDevicesFromJSON(
+        StructureReader.factories.add(new DatatonFactory());
+        ManagedDevice p1 = StructureReader.loadDevicesFromJSON(
                 "{\"devices\":"+
                 "[{" +
                 "\"name\": \"PR-11.2\","+

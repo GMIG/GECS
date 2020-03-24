@@ -12,16 +12,20 @@ import java.util.Map;
 /**
  * Created by brix isOn 3/16/2018.
  */
-public class Device {
+@SuppressWarnings("WeakerAccess")
+public class Device implements Commandable{
     private HashMap<String, ListenableCommand<?>> commands = new HashMap<>();
     private HashMap<String, ListenableArgCommand<?>> argCommands = new HashMap<>();
 
-    public String getData(Object key) {
+    public Object getData(String key) {
         return data.get(key);
     }
 
-    private HashMap<String, String> data = new HashMap<>();
+    public Map<String, Object> getDataList() {
+        return Collections.unmodifiableMap(data);
+    }
 
+    private HashMap<String, Object> data = new HashMap<>();
 
     private final String ID;
     private final Class<?> factory;
@@ -33,7 +37,7 @@ public class Device {
         return ID;
     }
 
-    Device(DeviceBuilder b) {
+    protected Device(DeviceBuilder b) {
         this.commands = b.commands;
         this.argCommands = b.argCommands;
         this.ID = b.ID;
@@ -65,14 +69,15 @@ public class Device {
         return Collections.unmodifiableMap(map3);
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static class DeviceBuilder <T extends DeviceBuilder<T>>{
         protected  Class<?> factory;
         protected  String description;
         protected String ID;
 
-        protected HashMap<String,ListenableCommand<?>> commands = new HashMap<>();
-        protected HashMap<String, ListenableArgCommand<?>> argCommands = new HashMap<>();
-        private HashMap<String, String> data = new HashMap<>();
+        protected final HashMap<String,ListenableCommand<?>> commands = new HashMap<>();
+        protected final HashMap<String, ListenableArgCommand<?>> argCommands = new HashMap<>();
+        private final HashMap<String, Object> data = new HashMap<>();
 
         public<U> T addCommand(String s, Command<U> cmd) {
             commands.put(s, new ListenableCommand<>(cmd,ID + ":" + s));
@@ -98,7 +103,7 @@ public class Device {
             return (T) this;
         }
 
-        public T setData(String key,String s) {
+        public T setData(String key,Object s) {
             this.data.put(key,s);
             return (T) this;
         }

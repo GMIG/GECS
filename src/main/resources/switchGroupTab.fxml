@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
+<?import org.controlsfx.control.ToggleSwitch?>
 <fx:root type="javafx.scene.control.Tab" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <content>
-        <VBox prefHeight="949.0" prefWidth="+Infinity">
-            <HBox prefWidth="+Infinity">
-                <Button id="turnOn" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Switch all on"/>
-                <Button id="turnOff" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Switch all off"/>
-                <Button id="update" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Update"/>
-
-            </HBox>
-            <Pane fx:id="diagPane" prefHeight="654.0" prefWidth="+Infinity">
-                <ImageView fx:id="img" fitHeight="590.0" fitWidth="1708.0" pickOnBounds="true" preserveRatio="true">
-                </ImageView>
-            </Pane>
-            <HBox VBox.vgrow="ALWAYS">
-                <AnchorPane fx:id="calendarPane" AnchorPane.bottomAnchor="0.0"
-                            AnchorPane.topAnchor="0.0">
-                </AnchorPane>
-                <VBox HBox.hgrow="NEVER">
-                    <HBox VBox.vgrow="NEVER">
-                    <DatePicker id="date" />
-                    </HBox>
-                <GridPane hgap="5.0" >
+    <VBox prefWidth="+Infinity" prefHeight="+Infinity">
+        <HBox prefWidth="+Infinity" prefHeight="-Infinity">
+            <Button id="turnOn" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Switch all on"/>
+            <Button id="turnOff" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Switch all off"/>
+            <Button id="update" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Update"/>
+            <ToggleSwitch id="watchdog" prefHeight="80.0" prefWidth="130.0" text="Automate restart" selected="true"/>
+        </HBox>
+        <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" fx:id="diagPane">
+            <ImageView fx:id="img" fitHeight="640.0" fitWidth="1800.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+        </Pane>
+        <HBox VBox.vgrow="ALWAYS" prefHeight="Infinity">
+            <AnchorPane fx:id="calendarPane" prefHeight="Infinity"/>
+            <VBox HBox.hgrow="NEVER">
+                <HBox VBox.vgrow="NEVER">
+                    <DatePicker id="date"/>
+                </HBox>
+                <GridPane hgap="5.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
@@ -41,7 +37,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                         <RowConstraints vgrow="SOMETIMES"/>
                     </rowConstraints>
-                    <Label fx:id="txtTurnOnTimeLabel" minWidth="65.0" text="Turn on time" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES"  GridPane.rowIndex="1"/>
+                    <Label fx:id="txtTurnOnTimeLabel" minWidth="65.0" text="Turn on time" GridPane.halignment="RIGHT"
+                           GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1"/>
                     <TextField fx:id="txtTurnOnHours" alignment="CENTER" maxWidth="50"
                                GridPane.columnIndex="1" GridPane.halignment="RIGHT"
                                GridPane.rowIndex="1"/>
@@ -51,22 +48,23 @@
                     <TextField fx:id="txtTurnOffHours" alignment="CENTER" maxWidth="50"
                                GridPane.columnIndex="1" GridPane.halignment="RIGHT"
                                GridPane.rowIndex="2"/>
-                    <TextField fx:id="txtTurnOffMinutes" alignment="CENTER" maxWidth="50"     GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-                    <Label fx:id="txtTurnOffTimeLabel" minWidth="65.0" text="Turn off time" GridPane.halignment="RIGHT" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2"/>
+                    <TextField fx:id="txtTurnOffMinutes" alignment="CENTER" maxWidth="50" GridPane.columnIndex="3"
+                               GridPane.rowIndex="2"/>
+                    <Label fx:id="txtTurnOffTimeLabel" minWidth="65.0" text="Turn off time" GridPane.halignment="RIGHT"
+                           GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2"/>
                     <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-                    <Button id="setSchedule" mnemonicParsing="false" text="Set" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                    <Button id="setSchedule" mnemonicParsing="false" text="Set" GridPane.columnIndex="1"
+                            GridPane.rowIndex="3"/>
 
                     <opaqueInsets>
                         <Insets/>
                     </opaqueInsets>
                 </GridPane>
-                </VBox>
-
-                <TextArea fx:id="log" HBox.hgrow="ALWAYS"/>
-            </HBox>
-            <opaqueInsets>
-                <Insets bottom="10.0"/>
-            </opaqueInsets>
-        </VBox>
-    </content>
+            </VBox>
+            <TextArea fx:id="log" HBox.hgrow="ALWAYS" prefHeight="Infinity"/>
+        </HBox>
+        <opaqueInsets>
+            <Insets bottom="10.0"/>
+        </opaqueInsets>
+    </VBox>
 </fx:root>

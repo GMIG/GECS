@@ -1,0 +1,614 @@
+{
+  "devices": [
+    {
+      "name": "BX-R1-1",
+      "x-icon": 77,
+      "y-icon": 56,
+      "rot": 0,
+      "x-label": 77,
+      "y-label": 95,
+      "type": ""
+    },
+    {
+      "name": "BX-R1-2",
+      "x-icon": 77,
+      "y-icon": 128,
+      "rot": 0,
+      "x-label": 77,
+      "y-label": 164,
+      "type": ""
+    },
+    {
+      "name": "BX-11-1",
+      "x-icon": 85,
+      "y-icon": 294,
+      "rot": 0,
+      "x-label": 85,
+      "y-label": 294,
+      "type": ""
+    },
+    {
+      "name": "BX-12-1",
+      "x-icon": 167,
+      "y-icon": 370,
+      "rot": 0,
+      "x-label": 84,
+      "y-label": 370,
+      "type": ""
+    },
+    {
+      "name": "BX-13-1",
+      "x-icon": 233,
+      "y-icon": 557,
+      "rot": 0,
+      "x-label": 171,
+      "y-label": 591,
+      "type": ""
+    },
+    {
+      "name": "BX-13-2",
+      "x-icon": 273,
+      "y-icon": 557,
+      "rot": 0,
+      "x-label": 273,
+      "y-label": 591,
+      "type": ""
+    },
+    {
+      "name": "BX-13-3",
+      "x-icon": 407,
+      "y-icon": 514,
+      "rot": 0,
+      "x-label": 407,
+      "y-label": 524,
+      "type": ""
+    },
+    {
+      "name": "BX-14-1",
+      "x-icon": 264,
+      "y-icon": 354,
+      "rot": 0,
+      "x-label": 264,
+      "y-label": 327,
+      "type": ""
+    },
+    {
+      "name": "BX-15-1",
+      "x-icon": 427,
+      "y-icon": 235,
+      "rot": 0,
+      "x-label": 405,
+      "y-label": 212,
+      "type": ""
+    },
+    {
+      "name": "BX-15-2",
+      "x-icon": 427,
+      "y-icon": 271,
+      "rot": 0,
+      "x-label": 427,
+      "y-label": 306,
+      "type": ""
+    },
+    {
+      "name": "BX-24-1",
+      "x-icon": 616,
+      "y-icon": 388,
+      "rot": 0,
+      "x-label": 520,
+      "y-label": 388,
+      "type": ""
+    },
+    {
+      "name": "BX-24-2",
+      "x-icon": 1028,
+      "y-icon": 388,
+      "rot": 0,
+      "x-label": 938,
+      "y-label": 397,
+      "type": ""
+    },
+    {
+      "name": "BX-24-3",
+      "x-icon": 1138,
+      "y-icon": 388,
+      "rot": 0,
+      "x-label": 1163,
+      "y-label": 398,
+      "type": ""
+    },
+    {
+      "name": "BX-221-1",
+      "x-icon": 626,
+      "y-icon": 413,
+      "rot": 0,
+      "x-label": 556,
+      "y-label": 447,
+      "type": ""
+    },
+    {
+      "name": "BX-221-2",
+      "x-icon": 775,
+      "y-icon": 413,
+      "rot": 0,
+      "x-label": 775,
+      "y-label": 391,
+      "type": ""
+    },
+    {
+      "name": "BX-23-1",
+      "x-icon": 880,
+      "y-icon": 242,
+      "rot": 0,
+      "x-label": 854,
+      "y-label": 228,
+      "type": ""
+    },
+    {
+      "name": "BX-23-2",
+      "x-icon": 880,
+      "y-icon": 276,
+      "rot": 0,
+      "x-label": 901,
+      "y-label": 284,
+      "type": ""
+    },
+    {
+      "name": "BX-26-1",
+      "x-icon": 893,
+      "y-icon": 301,
+      "rot": 0,
+      "x-label": 860,
+      "y-label": 335,
+      "type": ""
+    },
+    {
+      "name": "BX-271-1",
+      "x-icon": 1018,
+      "y-icon": 423,
+      "rot": 0,
+      "x-label": 930,
+      "y-label": 433,
+      "type": ""
+    },
+    {
+      "name": "BX-28-2",
+      "x-icon": 1300,
+      "y-icon": 301,
+      "rot": 0,
+      "x-label": 1327,
+      "y-label": 301,
+      "type": ""
+    },
+    {
+      "name": "BX-R2-1",
+      "x-icon": 826,
+      "y-icon": 66,
+      "rot": 0,
+      "x-label": 826,
+      "y-label": 101,
+      "type": ""
+    },
+    {
+      "name": "BX-R2-2",
+      "x-icon": 826,
+      "y-icon": 138,
+      "rot": 0,
+      "x-label": 826,
+      "y-label": 172,
+      "type": ""
+    },
+    {
+      "name": "BX-R2-3",
+      "x-icon": 986,
+      "y-icon": 66,
+      "rot": 0,
+      "x-label": 986,
+      "y-label": 101,
+      "type": ""
+    },
+    {
+      "name": "BX-A4-1",
+      "x-icon": 986,
+      "y-icon": 138,
+      "rot": 0,
+      "x-label": 986,
+      "y-label": 172,
+      "type": ""
+    },
+    {
+      "name": "BX-114-1",
+      "x-icon": 1148,
+      "y-icon": 66,
+      "rot": 0,
+      "x-label": 1148,
+      "y-label": 102,
+      "type": ""
+    },
+    {
+      "name": "DT-R1-1",
+      "x-icon": 243,
+      "y-icon": 56,
+      "rot": 0,
+      "x-label": 243,
+      "y-label": 95,
+      "type": ""
+    },
+    {
+      "name": "DT-R2-1",
+      "x-icon": 986,
+      "y-icon": 138,
+      "rot": 0,
+      "x-label": 986,
+      "y-label": 172,
+      "type": ""
+    },
+    {
+      "name": "DT-R2-2",
+      "x-icon": 1148,
+      "y-icon": 66,
+      "rot": 0,
+      "x-label": 1148,
+      "y-label": 95,
+      "type": ""
+    },
+    {
+      "name": "DT-R2-3",
+      "x-icon": 1148,
+      "y-icon": 138,
+      "rot": 0,
+      "x-label": 1148,
+      "y-label": 172,
+      "type": ""
+    },
+    {
+      "name": "DT-R2-4",
+      "x-icon": 1278,
+      "y-icon": 66,
+      "rot": 0,
+      "x-label": 1278,
+      "y-label": 95,
+      "type": ""
+    },
+    {
+      "name": "DT-R2-5",
+      "x-icon": 1278,
+      "y-icon": 138,
+      "rot": 0,
+      "x-label": 1278,
+      "y-label": 172,
+      "type": ""
+    },
+    {
+      "name": "PC-21-1",
+      "x-icon": 569,
+      "y-icon": 215,
+      "rot": 0,
+      "x-label": 515,
+      "y-label": 197,
+      "type": ""
+    },
+    {
+      "name": "PC-21-2",
+      "x-icon": 634,
+      "y-icon": 215,
+      "rot": 0,
+      "x-label": 621,
+      "y-label": 197,
+      "type": ""
+    },
+    {
+      "name": "PR-12-2",
+      "x-icon": 54,
+      "y-icon": 417,
+      "rot": 0,
+      "x-label": 64,
+      "y-label": 413,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-13-1",
+      "x-icon": 123,
+      "y-icon": 523,
+      "rot": 0,
+      "x-label": 136,
+      "y-label": 518,
+      "type": "Brix"
+    },
+    {
+      "name": " PR-15-3",
+      "x-icon": 283,
+      "y-icon": 524,
+      "rot": 0,
+      "x-label": 274,
+      "y-label": 495,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-11-2",
+      "x-icon": 167,
+      "y-icon": 294,
+      "rot": 0,
+      "x-label": 191,
+      "y-label": 300,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-12-1",
+      "x-icon": 177,
+      "y-icon": 410,
+      "rot": 0,
+      "x-label": 190,
+      "y-label": 412,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-13-2",
+      "x-icon": 243,
+      "y-icon": 524,
+      "rot": 0,
+      "x-label": 217,
+      "y-label": 495,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-13-3",
+      "x-icon": 283,
+      "y-icon": 524,
+      "rot": 0,
+      "x-label": 274,
+      "y-label": 495,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-13-4",
+      "x-icon": 383,
+      "y-icon": 524,
+      "rot": 0,
+      "x-label": 329,
+      "y-label": 523,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-14-2",
+      "x-icon": 304,
+      "y-icon": 355,
+      "rot": 0,
+      "x-label": 317,
+      "y-label": 353,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-15-1",
+      "x-icon": 407,
+      "y-icon": 280,
+      "rot": 0,
+      "x-label": 351,
+      "y-label": 280,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-15-2",
+      "x-icon": 407,
+      "y-icon": 245,
+      "rot": 0,
+      "x-label": 352,
+      "y-label": 241,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-24-1",
+      "x-icon": 625,
+      "y-icon": 363,
+      "rot": 0,
+      "x-label": 638,
+      "y-label": 358,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-24-4",
+      "x-icon": 1038,
+      "y-icon": 371,
+      "rot": 0,
+      "x-label": 1053,
+      "y-label": 368,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-24-5",
+      "x-icon": 1148,
+      "y-icon": 371,
+      "rot": 0,
+      "x-label": 1163,
+      "y-label": 368,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-221-1",
+      "x-icon": 669,
+      "y-icon": 423,
+      "rot": 0,
+      "x-label": 685,
+      "y-label": 419,
+      "type": "Brix"
+    },
+    {
+      "name": "TV-221-1",
+      "x-icon": 754,
+      "y-icon": 412,
+      "rot": 0,
+      "x-label": 739,
+      "y-label": 452,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-23-1",
+      "x-icon": 850,
+      "y-icon": 253,
+      "rot": 0,
+      "x-label": 795,
+      "y-label": 251,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-23-2",
+      "x-icon": 850,
+      "y-icon": 285,
+      "rot": 0,
+      "x-label": 797,
+      "y-label": 283,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-26-1",
+      "x-icon": 943,
+      "y-icon": 311,
+      "rot": 0,
+      "x-label": 960,
+      "y-label": 305,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-271-1",
+      "x-icon": 1058,
+      "y-icon": 433,
+      "rot": 0,
+      "x-label": 1072,
+      "y-label": 431,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-28-1",
+      "x-icon": 1278,
+      "y-icon": 312,
+      "rot": 0,
+      "x-label": 1262,
+      "y-label": 337,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-222-1",
+      "x-icon": 764,
+      "y-icon": 544,
+      "rot": 0,
+      "x-label": 781,
+      "y-label": 540,
+      "type": "Brix"
+    },
+    {
+      "name": " PR-26-2",
+      "x-icon": 1000,
+      "y-icon": 271,
+      "rot": 0,
+      "x-label": 1020,
+      "y-label": 266,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-23-3",
+      "x-icon": 785,
+      "y-icon": 196,
+      "rot": 0,
+      "x-label": 807,
+      "y-label": 205,
+      "type": "Brix"
+    },
+    {
+      "name": "TV-A4-1",
+      "x-icon": 1612,
+      "y-icon": 118,
+      "rot": 0,
+      "x-label": 1549,
+      "y-label": 117,
+      "type": "Brix"
+    },
+    {
+      "name": "TV-114-1",
+      "x-icon": 1612,
+      "y-icon": 118,
+      "rot": 0,
+      "x-label": 1549,
+      "y-label": 117,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-14-1",
+      "x-icon": 354,
+      "y-icon": 437,
+      "rot": 0,
+      "x-label": 300,
+      "y-label": 436,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-24-2",
+      "x-icon": 715,
+      "y-icon": 310,
+      "rot": 0,
+      "x-label": 728,
+      "y-label": 305,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-24-3",
+      "x-icon": 759,
+      "y-icon": 346,
+      "rot": 0,
+      "x-label": 774,
+      "y-label": 344,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-A2-1",
+      "x-icon": 530,
+      "y-icon": 118,
+      "rot": 0,
+      "x-label": 543,
+      "y-label": 116,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-25-1",
+      "x-icon": 865,
+      "y-icon": 457,
+      "rot": 0,
+      "x-label": 844,
+      "y-label": 482,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-25-2",
+      "x-icon": 930,
+      "y-icon": 457,
+      "rot": 0,
+      "x-label": 911,
+      "y-label": 482,
+      "type": "Brix"
+    },
+    {
+      "name": "TV-28-1",
+      "x-icon": 1138,
+      "y-icon": 311,
+      "rot": 0,
+      "x-label": 1153,
+      "y-label": 307,
+      "type": "Brix"
+    },
+    {
+      "name": "PR-272-1",
+      "x-icon": 1226,
+      "y-icon": 534,
+      "rot": 0,
+      "x-label": 1242,
+      "y-label": 531,
+      "type": "Brix"
+    }
+  ],
+  "switchGroups": [
+    {
+      "name": "expo",
+      "position": 0,
+      "image": "Capture.jpg"
+    }
+  ]
+}

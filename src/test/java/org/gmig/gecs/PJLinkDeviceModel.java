@@ -41,7 +41,7 @@ import static org.junit.Assert.*;
  * Created by brix isOn 2/21/2018.
  */
 public class PJLinkDeviceModel {
-    TCPCommandExecutor c;
+    private TCPCommandExecutor c;
 
     private static final Logger logger = Logger.getLogger(PJLinkDeviceModel.class);
     private NioSocketAcceptor server = new NioSocketAcceptor();
@@ -50,16 +50,16 @@ public class PJLinkDeviceModel {
             new TextLineEncoder(Charset.forName("UTF-8"), LineDelimiter.MAC),new TextLineDecoder(Charset.forName("UTF-8"), LineDelimiter.MAC));
     private ProtocolCodecFilter serializationFilter = new ProtocolCodecFilter(
             new ObjectSerializationEncoder(), new ObjectSerializationDecoder());
-    public static final String powerUpCommand = "%1POWR 1";
-    public static final String powerDownCommand = "%1POWR 0";
-    public static final String powerInfoCommand = "%1POWR ?";
-    public static final String replyOk = "%1POWR=OK";
-    public static final String reply1 = "%1POWR=1";
-    public static final String reply0 = "%1POWR=0";
-    public static final String replyErr = "%1POWR=ERR4";
-    public static final String replyHello = "PJLINK 0";
+    private static final String powerUpCommand = "%1POWR 1";
+    private static final String powerDownCommand = "%1POWR 0";
+    private static final String powerInfoCommand = "%1POWR ?";
+    private static final String replyOk = "%1POWR=OK";
+    private static final String reply1 = "%1POWR=1";
+    private static final String reply0 = "%1POWR=0";
+    private static final String replyErr = "%1POWR=ERR4";
+    private static final String replyHello = "PJLINK 0";
 
-    public boolean isOn = false;
+    private boolean isOn = false;
     public boolean isError = false;
     public boolean isConnected = true;
 
@@ -118,7 +118,7 @@ public class PJLinkDeviceModel {
         server = setUpServer("127.0.0.1");
     }
 
-    public void testPower(String pwr) throws ExecutionException, InterruptedException {
+    private void testPower(String pwr) throws ExecutionException, InterruptedException {
         ProtocolCodecFilter textfilter1 = new ProtocolCodecFilter(
                 new TextLineEncoder(),
                 new TextLineDecoder(){
@@ -162,7 +162,7 @@ public class PJLinkDeviceModel {
         testPower(powerDownCommand);
     }
 
-    CompletableFuture <Object>testPowerStatusGet() throws ExecutionException, InterruptedException {
+    private CompletableFuture <Object>testPowerStatusGet() throws ExecutionException, InterruptedException {
         ReactionCloseWithSuccess closing1 = new ReactionCloseWithSuccess();
         closing1.afterCompletionAccept((o) -> logger.debug("accepting 1 " + o));
         closing1.afterCompletionAccept((o) -> logger.debug("also accepting 1 " + o));
@@ -226,15 +226,11 @@ public class PJLinkDeviceModel {
         }
     }
 
-    void testProjectorPowerUp(ListenableCommand<?> c) throws Exception {
+    private void testProjectorPowerUp(ListenableCommand<?> c) throws Exception {
         AtomicBoolean b = new AtomicBoolean(false);
         AtomicBoolean b1 = new AtomicBoolean(false);
-        c.success.add((o)->{
-            b.set(true);
-        });
-        c.exception.add((o)->{
-            b.set(false);
-        });
+        c.success.add((o)-> b.set(true));
+        c.exception.add((o)-> b.set(false));
         CompletableFuture<?> future = c.exec().thenAccept((o)->b1.set(true));
         //Thread.sleep(1000);
         future.get();
@@ -252,10 +248,10 @@ public class PJLinkDeviceModel {
         p.switchOffCmd().exec().get();
         p.switchOnCmd().exec().get();
         p.switchOffCmd().exec().get();
-        StateRequestResult st = (StateRequestResult) p.stateReq().exec().get();
+        StateRequestResult st = p.stateReq().exec().get();
         assertFalse(st.isOn());
         p.switchOnCmd().exec().get();
-        st = (StateRequestResult) p.stateReq().exec().get();
+        st = p.stateReq().exec().get();
         assertTrue(st.isOn());
 
     }
@@ -273,7 +269,7 @@ public class PJLinkDeviceModel {
         }
     }
 
-    void testCheckErrorCmd() throws ExecutionException,InterruptedException{
+    private void testCheckErrorCmd() throws ExecutionException,InterruptedException{
         ManagedDevice p = ProjectorFactory.build("127.0.0.1");
         AtomicBoolean b = new AtomicBoolean(false);
         AtomicBoolean b1 = new AtomicBoolean(false);
@@ -327,19 +323,19 @@ public class PJLinkDeviceModel {
         testCheckErrorCmd();
     }
 
-    void testCheckStatusCmdOk()throws InterruptedException,ExecutionException {
+    private void testCheckStatusCmdOk()throws InterruptedException,ExecutionException {
         ManagedDevice p = ProjectorFactory.build("127.0.0.1");
         AtomicBoolean b = new AtomicBoolean(false);
         AtomicBoolean b1 = new AtomicBoolean(false);
         p.stateReq().success.add((o)-> {
-            StateRequestResult st = (StateRequestResult) o;
+            StateRequestResult st = o;
             logger.debug("isOn " + isOn + " isError " + isError);
             assertTrue(isOn == st.isOn());
         });
         p.stateReq().exec().get();
     }
 
-    void testCheckStatusCmdError()throws InterruptedException,ExecutionException {
+    private void testCheckStatusCmdError()throws InterruptedException,ExecutionException {
         ManagedDevice p = ProjectorFactory.build("127.0.0.1");
         AtomicBoolean b = new AtomicBoolean(false);
         AtomicBoolean b1 = new AtomicBoolean(false);

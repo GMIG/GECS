@@ -13,15 +13,15 @@ import java.text.ParseException;
 
 public class LoaderTest {
 
-    PJLinkDeviceModel m;
+    private PJLinkDeviceModel m;
 
-    NioSocketAcceptor acc1;
-    NioSocketAcceptor acc2;
-    NioSocketAcceptor acc3;
-    NioSocketAcceptor acc4;
+    private NioSocketAcceptor acc1;
+    private NioSocketAcceptor acc2;
+    private NioSocketAcceptor acc3;
+    private NioSocketAcceptor acc4;
 
-    UnitDeviceModel modPC1;
-    UnitDeviceModel modPC2;
+    private UnitDeviceModel modPC1;
+    private UnitDeviceModel modPC2;
     @Test
     public void testLoad() throws ParseException, SchedulerException, IOException, InterruptedException, ClassNotFoundException {
         m = new PJLinkDeviceModel();

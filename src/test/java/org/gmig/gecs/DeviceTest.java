@@ -14,7 +14,7 @@ public class DeviceTest  {
     private static final Logger logger = Logger.getLogger(DeviceTest.class);
 
 
-    Object a ;
+    private Object a ;
     @Test
     public void testChecks() throws Exception{
     a= null;

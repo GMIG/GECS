@@ -1,11 +1,9 @@
 package org.gmig.gecs;
 
-import junit.framework.TestCase;
+import org.apache.log4j.Logger;
 import org.gmig.gecs.command.Command;
 import org.gmig.gecs.command.CommandQueue;
 import org.gmig.gecs.command.ListenableCommand;
-import org.apache.log4j.Logger;
-import org.junit.Test;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -13,10 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by brix isOn 2/27/2018.
  */
-public class CommandQueueTest extends TestCase {
+public class CommandQueueTest  {
     private static final Logger logger = Logger.getLogger(CommandQueueTest.class);
 
-    @Test
     public void testCommand() throws InterruptedException {
         CommandQueue queue = new CommandQueue();
         queue.add(()-> CompletableFuture.supplyAsync(()-> {
@@ -40,7 +37,6 @@ public class CommandQueueTest extends TestCase {
 
         Thread.sleep(4000);
     }
-    @Test
     public void testCommand1() throws InterruptedException {
         CommandQueue queue = new CommandQueue();
         Command<String> cmd1 = ()-> CompletableFuture.supplyAsync(()-> {
@@ -68,7 +64,6 @@ public class CommandQueueTest extends TestCase {
         Thread.sleep(4000);
     }
 
-    @Test
     public void testBlockingCommand() throws InterruptedException {
         CommandQueue queue = new CommandQueue();
         queue.add(()->  {
@@ -87,7 +82,6 @@ public class CommandQueueTest extends TestCase {
         Thread.sleep(3000);
     }
 
-    @Test
     public void testNeverCompletedCommand() throws InterruptedException {
         CommandQueue queue = new CommandQueue();
         queue.setCommandTimeout(2000);
@@ -102,7 +96,6 @@ public class CommandQueueTest extends TestCase {
         Thread.sleep(3000);
     }
 
-    @Test
     public void testError() throws InterruptedException {
         CommandQueue queue = new CommandQueue();
         queue.add(()->  {

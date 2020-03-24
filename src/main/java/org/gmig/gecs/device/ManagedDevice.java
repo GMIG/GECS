@@ -20,10 +20,11 @@ public class ManagedDevice extends Device implements Switchable{
     }
 
     public static class ManagedDeviceBuilder extends DeviceBuilder<ManagedDeviceBuilder>{
-        CommandQueue queue;
+        final CommandQueue queue;
         int checkTime = 3*60*1000;
         private ManagedDeviceBuilder() {
             queue = new CommandQueue();
+            setData("command queue",queue);
         }
         //private SourceDeviceBuilder(CommandQueue queue) {
         //    this.queue = queue;
@@ -55,16 +56,30 @@ public class ManagedDevice extends Device implements Switchable{
             return this;
         }
 
+        public <T>ManagedDeviceBuilder setCheckedRestartCommand(Command<T> cmdCRestart) {
+            addCommand(StandardCommands.checkedRestart.name(), cmdCRestart);
+            return this;
+        }
+
         public ManagedDeviceBuilder setStateRequestCommand(Command<StateRequestResult> cmdInit) {
             addCommand(StandardCommands.init.name(),cmdInit);
             return this;
         }
 
-        public ManagedDeviceBuilder setCheckResendTime(int millis) {
+        public ManagedDeviceBuilder setCheckResendMillis(int millis) {
             checkTime = millis;
             return this;
         }
 
+        public ManagedDeviceBuilder setCheckResendTimeSeconds(int millis) {
+            setCheckResendMillis(millis*1000);
+            return this;
+        }
+
+        public ManagedDeviceBuilder setCheckResendTimeMinutes(int millis) {
+            setCheckResendMillis(millis*60*1000);
+            return this;
+        }
 
         @Override
         public ManagedDevice build() throws IllegalArgumentException{
@@ -77,6 +92,9 @@ public class ManagedDevice extends Device implements Switchable{
         {return (ListenableCommand<StateRequestResult>)getCommand(StandardCommands.init.name());}
     public ListenableCommand<?> checkCmd()
         {return  getCommand(StandardCommands.check.name());}
+    public ListenableCommand<?> checkedRestartCmd()
+        {return  getCommand(StandardCommands.checkedRestart.name());}
+
     @Override
     public ListenableCommand<?> switchOnCmd()
         {return getCommand(StandardCommands.switchOn.name());}

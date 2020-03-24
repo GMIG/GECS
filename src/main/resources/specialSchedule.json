@@ -1,1 +1,15 @@
-[ ]
+[ {
+  "switchGroup" : "Expo",
+  "date" : "30 12 2018"
+}, {
+  "switchGroup" : "Expo",
+  "date" : "31 12 2018"
+}, {
+  "switchGroup" : "Expo",
+  "date" : "1 1 2019"
+}, {
+  "switchGroup" : "Expo",
+  "date" : "5 1 2019",
+  "switch on" : "0 45 09",
+  "switch off" : "0 05 21"
+} ]

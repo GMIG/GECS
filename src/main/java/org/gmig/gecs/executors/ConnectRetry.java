@@ -19,26 +19,13 @@ class ConnectRetry implements IoFutureListener<ConnectFuture> {
     private int maxReconnectTries = 5;
     private int reconnectTimeMillis = 2000;
 
-    public int getMaxReconnectTries() {
-        return maxReconnectTries;
-    }
-    public void setMaxReconnectTries(int maxReconnectTries) {
-        this.maxReconnectTries = maxReconnectTries;
-    }
-    public int getReconnectTimeMillis() {
-        return reconnectTimeMillis;
-    }
-    public void setReconnectTimeMillis(int reconnectTimeMillis) {
-        this.reconnectTimeMillis = reconnectTimeMillis;
-    }
-
     private final Logger logger = Logger.getLogger(ConnectRetry.class);
-    private Supplier<ConnectFuture> operation;
-    private Supplier<Void> operationIfFailed;
+    private final Supplier<ConnectFuture> operation;
+    private final Supplier<Void> operationIfFailed;
 
-    private AtomicInteger i = new AtomicInteger(0);
-    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-    private String target;
+    private final AtomicInteger i = new AtomicInteger(0);
+    private final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+    private final String target;
 
     ConnectRetry(Supplier<ConnectFuture> operation, Supplier<Void> operationIfFailed, String target, int maxReconnectTries, int reconnectTimeMillis) {
         this.operation = operation;

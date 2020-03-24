@@ -8,12 +8,12 @@ import java.util.Set;
 /**
  * Created by brix on 4/17/2018.
  */
-public  interface Switchable <U,T>{
+public  interface Switchable <U,T> extends Commandable{
     ListenableCommand<U> switchOnCmd();
     ListenableCommand<T> switchOffCmd();
     String getName();
     Set<Switchable> getChildren();
-    //ListenableCommand<?> getCommand(String ID);
+
     default Set<Switchable> getAllChildren(){
         Set<Switchable> leafNodes = new HashSet<>();
         if (this.getChildren().isEmpty()) {
@@ -26,6 +26,4 @@ public  interface Switchable <U,T>{
         }
         return leafNodes;
     }
-
-
 }

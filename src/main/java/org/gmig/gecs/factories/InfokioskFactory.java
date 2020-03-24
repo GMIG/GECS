@@ -26,7 +26,7 @@ public class InfokioskFactory extends ManagedDeviceFactory {
     }
 
     public static ManagedDevice build(String IP, String mac, ManagedDevice.ManagedDeviceBuilder builder) throws IllegalArgumentException {
-        return VLCPlayerFactory.buildClass(IP,mac,builder).setSwitchOnCommand(wolExecutor.getCommand(IP,9,mac)).build();
+        return VLCPlayerFactory.constructVLCPlayer(IP,mac,builder).setSwitchOnCommand(wolExecutor.getCommand(IP,9,mac)).build();
     }
 
 }

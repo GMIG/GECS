@@ -1,10 +1,9 @@
 package org.gmig.gecs.reaction;
 
-import org.gmig.gecs.executors.SHelper;
-import org.gmig.gecs.executors.TCPReactionHandler;
-import org.apache.mina.core.future.CloseFuture;
 import org.apache.mina.core.future.IoFuture;
 import org.apache.mina.core.session.IoSession;
+import org.gmig.gecs.executors.SHelper;
+import org.gmig.gecs.executors.TCPReactionHandler;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executor;
@@ -28,8 +27,7 @@ public abstract class ReactionClose extends Reaction {
     protected IoFuture execute0(IoSession session, Object message){
         nextMap.put(TCPReactionHandler.connectionClosedID, new ReactionDoNothing());
         callbacks.forEach((c)-> SHelper.getFuture(session).thenAcceptAsync(c,executor));
-        CloseFuture f = session.closeNow();
-        return f;
+        return session.closeNow();
     }
 
 }

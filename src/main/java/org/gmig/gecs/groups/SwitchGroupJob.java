@@ -19,7 +19,7 @@ public class SwitchGroupJob implements Job {
         String switcherID  = context.getJobDetail().getKey().getGroup();
         String switcherCommand  =context.getJobDetail().getKey().getName();
         Object switchersObj = context.getJobDetail().getJobDataMap().get(switcherKey);
-        HashSet<SwitchGroup> switchGroups = null;
+        HashSet<SwitchGroup> switchGroups;
         if(switchersObj instanceof  HashSet)
             switchGroups = (HashSet<SwitchGroup>)switchersObj;
         else

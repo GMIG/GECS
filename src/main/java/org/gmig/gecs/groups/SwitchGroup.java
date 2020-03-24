@@ -93,6 +93,14 @@ public class SwitchGroup implements Switchable<HashMap<String,?>,HashMap<String,
                 .collect(Collectors.toSet());
     }
 
+    @Override
+    public ListenableCommand<?> getCommand(String ID) {
+        if(ID.equals(StandardCommands.switchOff.name()))
+            return switchOff;
+        if(ID.equals(StandardCommands.switchOn.name()))
+            return switchOn;
+        return null;
+    }
 
 
 
