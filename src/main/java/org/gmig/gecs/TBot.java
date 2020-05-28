@@ -58,7 +58,7 @@ public class TBot {
         this.allowedChats = allowedChats;
         if (client == null) {
             Proxy proxy = new Proxy(Proxy.Type.SOCKS, InetSocketAddress.createUnresolved(
-                    "145.239.94.208", 2280));
+                    "51.75.71.165", 2280));
             java.net.Authenticator.setDefault( new java.net.Authenticator() //Because okhttp does not seem to provide socks to set the Authenticator username and password interface, so set a global Authenticator
             {
                 private PasswordAuthentication authentication = new PasswordAuthentication("gmig", "EYC34347356734dhdfUYfglju675867KLJGH57q3IT2H".toCharArray());

@@ -50,11 +50,11 @@
       "factory": "VLCPlayerFactory"
     },
     {
-      "name": "BX-14-1",
-      "ip": "10.8.1.10",
+      "name": "R-14-1",
+      "ip": "10.8.0.115",
       "mac": "40-8D-5C-F4-B8-36",
       "description": "МИст:Рютин",
-      "factory": "VLCPlayerFactory"
+      "factory": "RDaemonFactory"
     },
     {
       "name": "BX-15-1",
@@ -590,9 +590,9 @@
       "source": "BX-13-3"
     },
     {
-      "name": "MOD:BX-14-1:PR-14-2",
+      "name": "MOD:R-14-1:PR-14-2",
       "visualisers": ["PR-14-2"],
-      "source": "BX-14-1"
+      "source": "R-14-1"
     },
     {
       "name": "MOD:BX-15-1:PR-15-1",
@@ -734,7 +734,7 @@
         "MOD:BX-13-1:PR-13-2",
         "MOD:BX-13-2:PR-13-3",
         "MOD:BX-13-3:PR-13-4",
-        "MOD:BX-14-1:PR-14-2",
+        "MOD:R-14-1:PR-14-2",
         "MOD:BX-15-1:PR-15-1",
         "MOD:BX-15-2:PR-15-2",
         "MOD:BX-24-1:PR-24-1",

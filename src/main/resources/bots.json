@@ -197,8 +197,8 @@
       {
         "type":"action",
         "request":"починить Мал. Ист. Рютин",
-        "device":"BX-14-1",
-        "command":"checkedRestart"
+        "device":"R-14-1",
+        "command":"restart"
       },
       {
         "type":"action",

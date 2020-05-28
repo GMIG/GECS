@@ -79,7 +79,7 @@ public class Loader {
         StructureReader.factories.add(new VLCTestPlayerFactory());
         StructureReader.factories.add(new DocCentrFactory());
         StructureReader.factories.add(new PCWithDaemonFactory());
-
+        StructureReader.factories.add(new RDaemonFactory());
         try {
             String structure = loadFileToString(structureFile);
             HashSet<ManagedDevice> devices = StructureReader.loadDevicesFromJSON(structure);

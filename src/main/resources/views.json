@@ -64,13 +64,13 @@
       "type": "Brix"
     },
     {
-      "name": "BX-14-1",
+      "name": "R-14-1",
       "x-icon": 264,
       "y-icon": 354,
       "rot": 0,
       "x-label": 264,
       "y-label": 327,
-      "type": "Brix"
+      "type": "Raspberry"
     },
     {
       "name": "BX-15-2",
