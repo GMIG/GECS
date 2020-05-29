@@ -1,8 +1,8 @@
 [
   {
-    "name":"testExpo_bot",
-    "token":"747756215:AAE5v95TCfNa_Pdd2eVLog_dJS3xGmRKOl4",
-    "allowedChats":[-346908453],
+    "name":"bot",
+    "token":"",
+    "allowedChats":[],
     "proxyPort":9150,
     "responses":[
       {
