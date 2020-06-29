@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -21,6 +22,8 @@ import org.gmig.gecs.groups.SwitchGroup;
 import org.gmig.gecs.groups.SwitchGroupScheduler;
 import org.gmig.gecs.groups.Watchdog;
 
+import java.awt.event.MouseEvent;
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -52,6 +55,11 @@ public class SwitchGroupView {
         Button turnOn = (Button)tab.getContent().lookup("#turnOn");
         Button turnOff = (Button)tab.getContent().lookup("#turnOff");
         ToggleSwitch watchdogsSwitch = (ToggleSwitch)tab.getContent().lookup("#watchdog");
+        Label coords = (Label)tab.getContent().lookup("#coords");
+        placePlanPane.setOnMouseClicked(( event)-> {
+                    if (event.getButton().compareTo(MouseButton.SECONDARY) == 0)
+                        coords.setText(event.getX() + "," + event.getY());
+                });
         watchdogsSwitch.selectedProperty().addListener((observable, oldValue, newValue) ->
                 watchdogs.forEach(watchdog -> watchdog.enabled.set(newValue)));
         watchdogs.forEach((dog)->{

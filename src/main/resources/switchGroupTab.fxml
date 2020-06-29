@@ -12,6 +12,7 @@
             <Button id="turnOff" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Switch all off"/>
             <Button id="update" mnemonicParsing="false" prefHeight="80.0" prefWidth="170.0" text="Update"/>
             <ToggleSwitch id="watchdog" prefHeight="80.0" prefWidth="130.0" text="Automate restart" selected="true"/>
+            <Label id="coords" prefHeight="80.0" prefWidth="400.0"/>
         </HBox>
         <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" fx:id="diagPane">
             <ImageView fx:id="img" fitHeight="640.0" fitWidth="1800.0" pickOnBounds="true" preserveRatio="true">

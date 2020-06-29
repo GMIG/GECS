@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
@@ -16,6 +17,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -26,6 +29,7 @@ import org.gmig.gecs.command.ListenableCommand;
 import org.gmig.gecs.device.Device;
 import org.gmig.gecs.device.StandardCommands;
 import org.gmig.gecs.device.StateRequestResult;
+import org.gmig.gecs.groups.SwitchGroup;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -36,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -53,7 +58,7 @@ public class DeviceView {
     private TextArea logField;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-
+    public final String deviceName;
 
     private LinkedBlockingQueue<String> logs = new LinkedBlockingQueue<>();
     private void addToLog(String str){
@@ -70,7 +75,9 @@ public class DeviceView {
         return theText;
     }
 
-    public DeviceView(Device device, JsonNode viewJson, JsonNode types) throws ClassNotFoundException, IOException {
+    public DeviceView(Device device, JsonNode viewJson, JsonNode types, Runnable disableF,Runnable enableF)
+            throws ClassNotFoundException, IOException {
+        deviceName = device.getName();
         Label name = new Label(device.getName());
         if(device.getName().contains("R1") || device.getName().contains("R2")) {
             name.setFont(Font.font("System", 11));
@@ -136,6 +143,15 @@ public class DeviceView {
         info.setOnAction(e -> stage.show());
         menu.getItems().add(info);
 
+        MenuItem disable = new MenuItem("DISABLE");
+        disable.setOnAction((e)->disableF.run());
+        menu.getItems().add(disable);
+
+        MenuItem enable = new MenuItem("ENABLE");
+        enable.setOnAction((e)->enableF.run());
+        menu.getItems().add(enable);
+
+
         icon.setOnMouseClicked((e -> menu.show(icon, Side.BOTTOM, 0, 0)));
 
         if(device.getCommandList().keySet().contains(StandardCommands.check.name())) {
@@ -180,8 +196,6 @@ public class DeviceView {
             restart.exception.add(this::setError);
             restart.success.add(this::setOn);
         }
-
-
         stage.setTitle(device.getName());
         stage.setOnCloseRequest((e)->{e.consume();stage.hide();});
         Parent infoWindow = FXMLLoader.load(getClass().getClassLoader().getResource("deviceInfo.fxml"));
@@ -263,4 +277,20 @@ public class DeviceView {
     private void setQueueEmpty(){
         Platform.runLater(()->iconLetter.setBackground(Background.EMPTY));
     }
+
+    public void setDisabled(){
+        Platform.runLater(()->{
+            iconPolygon.setStrokeWidth(2);
+            //iconPolygon.setStrokeType(StrokeType.OUTSIDE);
+            iconPolygon.setStroke(Color.BLACK);
+            iconPolygon.setStrokeDashOffset(1);
+            iconPolygon.setStrokeLineCap(StrokeLineCap.BUTT);
+            iconPolygon.getStrokeDashArray().addAll(2.0,3.0);
+
+        });
+    }
+    public void setEnabled(){
+        Platform.runLater(()->iconPolygon.setStrokeWidth(0));
+    }
+
 }

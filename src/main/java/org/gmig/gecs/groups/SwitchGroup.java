@@ -2,15 +2,14 @@ package org.gmig.gecs.groups;
 
 import org.gmig.gecs.command.Command;
 import org.gmig.gecs.command.ComplexCommandBuilder;
+import org.gmig.gecs.command.ListenableArgCommand;
 import org.gmig.gecs.command.ListenableCommand;
 import org.gmig.gecs.device.StandardCommands;
 import org.gmig.gecs.device.Switchable;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -22,20 +21,42 @@ public class SwitchGroup implements Switchable<HashMap<String,?>,HashMap<String,
         return structure;
     }
 
+    public Set<Switchable> getDisabledSwitchables() {
+        return java.util.Collections.unmodifiableSet(excludedSwitchables);
+    }
     private final HashMap<String,Switchable> structure;
+    private final Set<Switchable> excludedSwitchables;
+
     private final ListenableCommand<HashMap<String,?>> switchOn;
     private final ListenableCommand<HashMap<String,?>> switchOff;
+    private final ListenableArgCommand<?> addExcluded;
+    private final ListenableArgCommand<?> removeExcluded;
+
     private final String ID;
 
     public static SwitcherBuilder newBuilder(){return new SwitcherBuilder();}
     private SwitchGroup(SwitcherBuilder b) {
         this.structure = b.structure;
+        this.excludedSwitchables = b.excludedSwitchables;
+        this.addExcluded = new ListenableArgCommand<Switchable>((added)->{
+            Switchable addedSw = (Switchable)added;
+            this.excludedSwitchables.add(addedSw);
+            return CompletableFuture.completedFuture(addedSw);
+        },"switchGroup:" + b.ID + ":added exclusion");
+        this.removeExcluded = new ListenableArgCommand<Switchable>((removed)->{
+            Switchable removedSw = (Switchable)removed;
+            this.excludedSwitchables.remove(removedSw);
+            return CompletableFuture.completedFuture(removedSw);
+        },"switchGroup:" + b.ID + ":removed exclusion");
+        //this.removeExcluded
         this.ID = b.ID;
         this.switchOn = new ListenableCommand<>(b.switchOn, "switchGroup:" + ID + ":"+ StandardCommands.switchOn.name() + ":" + ID );
         this.switchOff = new ListenableCommand<>(b.switchOff, "switchGroup:"+ ID + ":" + StandardCommands.switchOff.name() + ":"+ ID );
     }
     public static class SwitcherBuilder {
         private final HashMap<String,Switchable> structure = new LinkedHashMap<>();
+        private final Set<Switchable> excludedSwitchables = Collections.synchronizedSet(new HashSet<>());
+
         ComplexCommandBuilder swithcOncmdbuilder = ComplexCommandBuilder.builder();
         ComplexCommandBuilder swithcOffcmdbuilder = ComplexCommandBuilder.builder();
 
@@ -56,8 +77,23 @@ public class SwitchGroup implements Switchable<HashMap<String,?>,HashMap<String,
             String ID = "";
 
             for (Map.Entry<String, Switchable> e : structure.entrySet()) {
-                swithcOncmdbuilder.addCommand(0,e.getKey(),e.getValue().switchOnCmd().getCommand());
-                swithcOffcmdbuilder.addCommand(0,e.getKey(),e.getValue().switchOffCmd().getCommand());
+                Command<?> conditionalSwitchOn = ()->{
+                    if (!excludedSwitchables.contains(e.getValue())){
+                        return e.getValue().switchOnCmd().exec();
+                    }
+                    return CompletableFuture.completedFuture(null);
+                };
+                Command<?> conditionalSwitchOff = ()->{
+                    if (!excludedSwitchables.contains(e.getValue())){
+                        return e.getValue().switchOffCmd().exec();
+                    }
+                    return CompletableFuture.completedFuture(null);
+                };
+                swithcOncmdbuilder.addCommand(0,e.getKey(),conditionalSwitchOn);
+                swithcOffcmdbuilder.addCommand(0,e.getKey(),conditionalSwitchOff);
+
+                //swithcOncmdbuilder.addCommand(0,e.getKey(),e.getValue().switchOnCmd().getCommand());
+                //swithcOffcmdbuilder.addCommand(0,e.getKey(),e.getValue().switchOffCmd().getCommand());
             }
             ID += structure.values().stream().map(Switchable::getName).collect(Collectors.joining(","));
             ID += ";";
@@ -70,6 +106,8 @@ public class SwitchGroup implements Switchable<HashMap<String,?>,HashMap<String,
         }
     }
 
+    public ListenableArgCommand<?> addExcludedCmd() { return addExcluded;}
+    public ListenableArgCommand<?> removeExcludedCmd() { return removeExcluded;}
 
     @Override
     public ListenableCommand<HashMap<String,?>> switchOnCmd() {

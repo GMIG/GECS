@@ -1,7 +1,14 @@
 package org.gmig.gecs;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.gmig.gecs.device.Commandable;
 import org.gmig.gecs.device.Device;
 import org.gmig.gecs.device.ManagedDevice;
@@ -11,12 +18,11 @@ import org.gmig.gecs.groups.Module;
 import org.gmig.gecs.groups.SwitchGroup;
 import org.gmig.gecs.groups.VisModule;
 import org.gmig.gecs.views.DeviceView;
+import org.quartz.SimpleTrigger;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  *
@@ -165,22 +171,74 @@ public final class StructureReader {
         return botsSet;
     }
 
-    static Set<DeviceView> loadDeviceViewsFromJSON(Set<? extends Device> devices, String viewTypes, String views) throws IOException, ClassNotFoundException {
+    static Set<DeviceView> loadDeviceViewsFromJSON(Set<? extends Device> devices,
+                                                   String viewTypes, String views, SwitchGroup switchGroup)
+                                                                    throws IOException, ClassNotFoundException {
         JsonNode viewTypesNode = mapper.readTree(viewTypes);
         JsonNode viewsNode = mapper.readTree(views).get("devices");
         HashSet<DeviceView> viewsMap = new HashSet<>();
 
         for (JsonNode view : viewsNode) {
-            Optional<? extends Device> deviceOptional = devices.stream().filter((dev)->dev.getName().equals(view.get("name").asText())).findFirst();
+            Optional<? extends Device> deviceOptional = devices.stream().filter((dev)->dev.getName().
+                                                                    equals(view.get("name").asText())).findFirst();
             if(!deviceOptional.isPresent())
                 continue;
             //throw new ClassNotFoundException("Device view type not found:" + view.get("name").asText());
             Device device = deviceOptional.get();
-            viewsMap.add(new DeviceView(device,view,viewTypesNode));
+
+            Optional<Switchable> toDisable = switchGroup.getChildren().stream().filter((c)->c == device).findFirst();
+            if (!toDisable.isPresent())
+                toDisable = switchGroup.getChildren().stream().filter((c)->c instanceof Module).
+                                             filter((x)->x.getAllChildren().contains(device)).findFirst();
+            Runnable disableF;
+            Runnable enableF;
+
+            if (toDisable.isPresent()){
+                Switchable toDisableSw = toDisable.get();
+                disableF = ()->switchGroup.addExcludedCmd().exec(toDisableSw);
+                enableF = ()->switchGroup.removeExcludedCmd().exec(toDisableSw);
+            }
+            else {
+                disableF = () -> { };
+                enableF = () -> { };
+
+            }
+            viewsMap.add(new DeviceView(device,view,viewTypesNode,disableF,enableF));
         }
         return viewsMap;
     }
 
+    static void updateDisabledFromJSON(String disabled, SwitchGroup switchGroup) throws IOException {
+        JsonNode disabledNode = mapper.readTree(disabled);
+        for (JsonNode record : disabledNode) {
+            String group = record.get("switchGroup").asText();
+            if(!group.equals(switchGroup.getName()))
+                continue;
+            for (JsonNode view : record.get("list")) {
+                switchGroup.getChildren().stream()
+                        .filter((dev)-> dev.getName().equals(view.asText()))
+                        .findFirst().ifPresent((dev)->switchGroup.addExcludedCmd().exec(dev));
+            }
+        }
+    }
 
+    static void saveDisabledDataToJSON(HashSet<SwitchGroup> switchGroups, File file) throws IOException {
+        ArrayNode root = mapper.createArrayNode();
+        switchGroups.forEach((switchGroup -> {
+            ObjectNode switchGroupJSON = mapper.createObjectNode();
+            switchGroupJSON.put("switchGroup",switchGroup.getName());
+            ArrayNode list = mapper.createArrayNode();
+            switchGroup.getDisabledSwitchables().forEach((switchable -> {
+                list.add(switchable.getName());
+            }));
+            switchGroupJSON.put("list",list);
+            root.add(switchGroupJSON);
+        }));
+
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        writer.writeValue(file, root);
 
     }
+
+
+}

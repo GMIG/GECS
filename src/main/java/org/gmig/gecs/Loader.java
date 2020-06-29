@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,6 +45,7 @@ public class Loader {
     private String viewsFile = "views.json";
     private String sourcesFile = "sources.json";
     private String botsFile = "bots.json";
+    private String disabledFile = "disabled.json";
 
 
     private final SourcesServer server = new SourcesServer();
@@ -100,7 +102,8 @@ public class Loader {
             all.addAll(modules);
 
             HashSet<SwitchGroup> switchGroups = StructureReader.loadSwitchersFromJSON(all, structure);
-
+            //Module d = modules.stream().filter((dev)->dev.getName().equals("MOD:BX-114-1:TV-114-1")).findFirst().get();
+            //switchGroups.stream().filter((dev)->dev.getName().equals("Cafe")).findFirst().get().addExcludedCmd().exec(d);
             HashSet<Switchable> allCommandables = new HashSet<>();
             allCommandables.addAll(devices);
             allCommandables.addAll(modules);
@@ -144,7 +147,7 @@ public class Loader {
             String views = loadFileToString(viewsFile);
 
             ObjectMapper mapper = new ObjectMapper();
-
+            String disabled = loadFileToString(disabledFile);
             for (SwitchGroup switchGroup : switchGroups) {
                 JsonNode viewsNode = mapper.readTree(views).get("switchGroups");
 
@@ -166,9 +169,50 @@ public class Loader {
                 sourcesAndDevices.addAll(devicesOfGroup);
                 sourcesAndDevices.addAll(sourcesOfGroup);
 
-                Set<DeviceView> viewsSet = StructureReader.loadDeviceViewsFromJSON(sourcesAndDevices, viewTypes, views);
+                Set<DeviceView> viewsSet = StructureReader.loadDeviceViewsFromJSON(
+                                                sourcesAndDevices, viewTypes, views, switchGroup);
+                switchGroup.addExcludedCmd().success.add((device)-> {
+                    Switchable sw = (Switchable)device;
+                    viewsSet.forEach((view)->{
+                        Set<String> names = new HashSet<>();
+                        if(sw.getAllChildren().isEmpty())
+                            names.add(sw.getName());
+                        else
+                            sw.getAllChildren().forEach((dev)->names.add(((Switchable)dev).getName()));
+                        names.stream().filter((name)->name.equals(view.deviceName))
+                                            .findFirst().ifPresent((name)->view.setDisabled());
+                    });
+                });
+
+                Consumer updateDisableFile = (device)->{
+                    try {
+                        StructureReader.saveDisabledDataToJSON(switchGroups, getFile(disabledFile));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                };
+
+                switchGroup.addExcludedCmd().success.add(updateDisableFile);
+                switchGroup.removeExcludedCmd().success.add(updateDisableFile);
+
+                switchGroup.removeExcludedCmd().success.add((device)-> {
+                    Switchable sw = (Switchable)device;
+                    viewsSet.forEach((view)->{
+                        Set<String> names = new HashSet<>();
+                        if(sw.getAllChildren().isEmpty())
+                            names.add(sw.getName());
+                        else
+                            sw.getAllChildren().forEach((dev)->names.add(((Switchable)dev).getName()));
+                        names.stream().filter((name)->name.equals(view.deviceName))
+                                                .findFirst().ifPresent((name)->view.setEnabled());
+                    });
+                });
+
+                StructureReader.updateDisabledFromJSON(disabled,switchGroup);
+
                 viewsSet.forEach((dv) ->
                         dv.addToPane(switchGroupView.placePlanPane));
+
                 switchGroupView.set.setOnMouseClicked((e) -> {
                     LocalDate dt = ((DatePicker) switchGroupView.tab.getContent().lookup("#date")).getValue();
                     try {
