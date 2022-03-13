@@ -2,6 +2,302 @@
 
 <img src="https://i.imgur.com/W8wbb4B.jpg" height="450">
 
+## What is GECS?
+Museum equipment, especially made without the participation of big capital, often fails. It is not convenient to serve and monitor it. But usually it can be controlled remotely.
+GECS allows you to control exposure equipment. At the moment, these are the following devices:
+
+- Windows PC
+- projectors with PJLink support
+- Sharp TVs
+- Dataton Watchpax
+- Raspberry PI on Raspbian
+- presence or motion sensors
+
+GECS can:
+- turn on / off devices together and separately
+- monitor their status (working-broken)
+- automatically restart if broken
+- provide caretakers with the opportunity to fix if they see that something is broken through the Telegram bot.
+
+Of course, there are commercial solutions that can do all this (for example, Crestron). But, firstly, it is not always possible to pay money, and secondly, I want to have control and the ability to configure in my hands.
+Of course, there is open-source that can do all this (for example, OpenHab). But in order to set it up qualitatively and fully, you need to learn the OpenHab language, and when things go wrong, Java. We decided that it is better to use Java right away.
+## How to install GECS?
+GECS is a program written in JAVA 8 SE. At the moment, it has only been tested on Windows 10. To run it, you need:
+1. Install [Java](https://www.java.com/ru/) if you don't have it installed yet
+2. Download [GECS program]()
+3. Unpack the program and run it by writing on the command line
+```
+java -jar GECS.jar
+```
+4. It will start and display the hardware configuration of the Gulag History Museum. You probably don't need it. In order for you to be able to do what you need to do, you need to write your hardware configuration into JSON configuration files
+## Set up JSON
+All GECS settings are stored in JSON files:
+structure.json - information about devices and their configuration
+cronSchedule.json - information about regularly switching exposure on and off
+specialSchedule.json - information about special days to turn on and off the exposure
+views.json - information on how to display devices in the GECS window
+viewTypes.json - information about how devices look in the GECS window
+sources.json - information about external command sources
+bots.json - information about telegram bots
+### Configuring exposure in structure.json
+The structure in which the devices reside
+
+<img src="https://i.imgur.com/AWEZy5P.jpg" height="250">
+
+#### Structural units
+
+**switchGroup** - switching group - a set of devices and modules that the system turns on and off simultaneously and in parallel. Turning on and off can be scheduled according to the schedule in the cronSchedule.json and specialSchedule.json files. The group is displayed in the interface as a tab. Turning on, turning off and checking the current status of all devices in the group is done using the Switch all off, Switch all on and Update buttons.
+
+As a rule, a group is used for functionally different rooms. For example, the group "exposition", "cafe", "library".
+
+**vismodule** - display module. Includes one *signal output device* and many *display devices*. If the display module is in the inclusion group, then the devices are turned on according to the following algorithm:
+1. All display devices turn on at the same time. If at least one display device fails, switching on is stopped.
+2. The signal output device is turned on.
+
+Shutdown occurs in reverse order.
+
+The display module is controlled by an automatic reboot and shutdown system (Watchdog).
+
+If a signal emitter does not have a controlled restart command and it fails to turn on, Watchdog will automatically turn off all display devices and report an error to the console and Exposure Bot.
+
+If the alert device has a controlled restart command (currently it is PCWithDaemon, VLCPlayer, VLCPlayer2Screen), then Watchdog works according to the following principle. If a failure occurs during power-up or regular check (check) of the alarm device, Watchdog will issue a restart command. If it fails again after a restart, Watchdog will turn off all display devices and report an error to the console and Exposure Bot.
+
+The display module is not displayed in the interface.
+
+**module** - general purpose module. When turned on and off, the module sequentially turns on / off the specified devices. If one of the devices fails during switching on/off, switching on/off is stopped. Switching on and off occurs in the reverse order.
+
+The general purpose module is not displayed in the interface.
+
+**device** - device. To be in an enable group, a device must be able to turn on and off. The device is displayed in the interface according to the settings in the views.json file.
+
+#### structrue.json - attributes of structural units
+JSON consists of 5 sections:
+
+- `devices`
+-`vismodules`
+- `modules`
+- `switchGroups`
+
+Each section includes structural units, which are described by a set of attributes. For example `device`
+
+```
+    {
+      "name": "PC1-1",
+      "ip": "192.168.0.1",
+      "mac": "FC-AA-14-CC-6B-91",
+      "description": "Propaganda, First camps",
+      "factory": "VLCPlayer2ScreenFactory"
+    }
+```
+`name` is the unique name of the structural unit. Present in all structural units.
+
+
+**`device`** - describes the device type. The attributes are specific to the specific device type specified in the `factory` parameter:
+
+Windows PC devices:
+
+- `PCWithDaemonFactory` - A Windows PC with a Daemon resident program running on it.
+- `VLCPlayerFactory` - Windows PC with VLCPlayer program installed on it.
+- `VLCPlayer2ScreenFactory` - Windows PC with two VLCPlayer programs installed on it. Programs must differ by port.
+
+For Windows PC devices, you must specify `mac` - the mac address of the computer
+
+Other devices:
+
+- `ProjectorFactory` - any projector that supports PJLink
+- `SharpTVFactory` - Sharp Aquos series TV
+- `RaspberryFactory` - Raspberry PI with running resident Daemon
+
+All of these devices are:
+`ip` — device ip address
+`description` is a description of the device.
+
+**`vismodule`** describes the attributes of the visualization module.
+`visualisers` - list of display devices
+`source` is the signal issuing device.
+
+**`module`** describes the attributes of a general purpose module.
+`sequence` - the sequence in which devices are turned on or off.
+
+**`switchGroup`** describes the attributes of an include group.
+`list` is a list of simultaneously enabled devices. This may include `device`, `vismodule` and `module`
+
+#### cronSchedule.json - parameters for automatic regular scheduled on/off in
+JSON consists of a list of inclusion rules applied to the inclusion groups
+
+An example of an include rule that sends an enable command to the `Expo` enable group every day at 11:15 AM and an OFF command at 21:00 PM. The rules are set in the [crontrigger] language (http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html)
+
+```
+{
+"switchGroup": "Expo",
+"switch on": {
+    "include": [
+      "0 15 11 ? * *"
+    ],
+    "exclude": [
+    ]
+  },
+"switch off": {
+    "include": [
+      "0 0 21 ? ​​* *"
+    ],
+    "exclude": [
+    ]
+  }
+}
+```
+The entered values ​​are displayed in the interface in the tab of the corresponding inclusion group.
+
+#### specialSchedule.json - parameters for automatic on/off on special days
+The JSON consists of a list of special inclusion conditions on a specific day that apply to inclusion groups. This schedule takes precedence over cronSchedule and is used to set special hours to turn on and off on special days. For example, on the fifth of January on Friday, the exposure must be turned on earlier - at 9:45, and turned off later - at 21:30.
+
+```
+{
+  "switchGroup" : "Expo",
+  "date" : "5 1 2019",
+  "switch on" : "0 45 09",
+  "switch off" : "0 30 21"
+}
+```
+Conditions can be set using the interface.
+
+<img src="https://i.imgur.com/0MflBpG.jpg" height="200">
+
+You must select the date, time to turn on and off and press the Set button. The new entry will appear in specialSchedule.json
+
+#### views.json - parameters for displaying devices and inclusion groups on the interface
+JSON contains two sections:
+- `devices` contains device mapping information
+- `switchGroups` contains information about switch groups
+
+The device mapping information includes a unique device name `name` corresponding to the name from structure.json. As well as icon coordinates `x-icon`, `y-icon`, rotation angle in degrees `rot`, label coordinates `x-label`, `y-label` and the type of icon in the `type` attribute. Icon types are defined in the viewTypes.json file.
+
+```
+{
+  "name": "PC1-1",
+  "x-icon": 77,
+  "y-icon": 66,
+  "rot": 0,
+  "x-label": 77,
+  "y-label": 85,
+  "type": "PC"
+}
+```
+
+Information about inclusion groups contains the name of the group from structure.json, the position in the bookmarks on the interface `position` and the background image `image`.
+
+```
+{
+  "name": "expo",
+  position: 0
+  "image": "capture.jpg"
+}
+```
+
+#### viewTypes.json - parameters for displaying device types on the interface
+JSON contains information about device icons displayed in the interface. Each data set contains the name of the type `type`, a list of coordinates, according to which the polygon of the `polygon` icon will be built, and `letter` - the letter displayed in the center of the polygon.
+```
+{
+    "type":"PC",
+    "polygon":[
+        "0.0",
+        "0.0",
+        "20.0",
+        "0.0",
+        "20.0",
+        "20.0",
+        "0.0",
+        "20.0"
+    ],
+    "letter":"B"
+}
+```
+
+#### sources.json - external event handler parameters
+External event handlers read data coming as external TCP/IP messages from port 11213 and activate the command. The message must be sent in the format `<handler name>:<signal name>`.
+JSON contains a list of handlers. Processing Information
+The parent includes the handler name `name`, and a list of input signals `signals`. Each input signal contains a name `name` and `actions` a list of commands to be executed in sequence when the signal is activated. The commands in the list include `device` - a structural unit (any, not just a device) that will execute the command and `command` - the textual name of the command. The name of the command can be found by right-clicking on the object in the interface.
+
+```
+  {
+    "name": "starter",
+    "signals": [
+      {
+        "name": "on",
+        "actions": [
+          {
+            "device": "Expo",
+            "command": "switchOn"
+          }
+        ]
+      },
+      {
+        "name": "off",
+        "actions": [
+          {
+            "device": "Expo",
+            "command": "switch Off"
+          }
+        ]
+      }
+    ]
+  }
+```
+
+#### bots.json - service bot parameters
+The JSON includes information that allows you to connect a Telegram bot, with which users of the group can control the exposure. In order to connect a bot, you need to create it and fix its token (XXX) and name (NNNNNN). Then you need to create a group and connect this bot there. You need to find the code of the created group. To do this, you need to go to the group through the web interface and fix in the address bar https://web.telegram.org/#/im?p=gYYYYYYYYY where instead of YYYYYYYYY there should be a number - the code of the created group.
+
+The data includes the name of the bot `name`, its token `token`, codes of chats in which the bot is available `allowedChats` (the code must be preceded by a minus sign). The proxy port `proxyPort` is also set. Proxy parameters are hardcoded in the program.
+
+The work of the bot is determined by the bot's responses to user requests `responces`. The response action specifies the action type `type`, the text request `request` in response to which the response action is activated, and the text that accompanies the response action.
+
+```
+"name":"NNNNNN",
+"token":"XXXXXXXXX:XXXXXXXXXXXXXXXXXXXXXXXX",
+"allowedChats":[-YYYYYYYYY],
+"proxyPort":9150,
+```
+
+There are three types of responses:
+
+- `choice` demonstrates the interface of the choices specified in the list
+
+```
+{
+    "type":"choice",
+    "request":"Bot",
+    "text":" please choose what to do:",
+    "choice":[
+      "turn on exposure",
+      "turn off exposure"
+    ]
+}
+```
+
+- `action` activates the `command` command on the `device` structural unit (this can be not only a device, but a module or a group)
+
+```
+{
+    "type":"action",
+    "request":"enable exposure",
+    "device":"Expo",
+    "command":"switchOff"
+}
+```
+
+- `text` displays response text
+
+```
+{
+    "type":"text",
+    "request":"do nothing",
+    "text":"That's nice"
+}
+```
+# Gulag Exhibition Control System (GECS)
+
+<img src="https://i.imgur.com/W8wbb4B.jpg" height="450">
+
 ## Что такое GECS?
 Музейная техника, особенно сделанная без участия крупного капитала часто подводит. Ее не удобно обслуживать и следить за ней. Но как правило ей можно удаленно управлять.
 GECS позволяет управлять экспозционной техникой. На данный момент это следующие устройства:
