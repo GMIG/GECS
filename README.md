@@ -3,28 +3,28 @@
 <img src="https://i.imgur.com/W8wbb4B.jpg" height="450">
 
 ## What is GECS?
-Museum equipment, especially made without the participation of big capital, often fails. It is not convenient to serve and monitor it. But usually it can be controlled remotely.
-GECS allows you to control exposure equipment. At the moment, these are the following devices:
+Exhibition and any other multimedia equipment, especially made without the participation of big capital, often fails. In-house made interactive exhibits, projectors and kiosks have to be switched on and off manually, by technical personnel. That is neither convenient nor comfortable. 
+GECS allows you to control and monitor the exhibition equipment. At the moment, these are the following devices:
 
 - Windows PC
 - projectors with PJLink support
 - Sharp TVs
 - Dataton Watchpax
-- Raspberry PI on Raspbian
+- Raspberry PI on Raspbian or Raspberry PI OS
 - presence or motion sensors
 
 GECS can:
-- turn on / off devices together and separately
-- monitor their status (working-broken)
+- turn on/off the devices together and/or separately
+- monitor their status (working or broken)
 - automatically restart if broken
-- provide caretakers with the opportunity to fix if they see that something is broken through the Telegram bot.
+- provide attenders with the opportunity to restart them through the Telegram bot.
 
-Of course, there are commercial solutions that can do all this (for example, Crestron). But, firstly, it is not always possible to pay money, and secondly, I want to have control and the ability to configure in my hands.
-Of course, there is open-source that can do all this (for example, OpenHab). But in order to set it up qualitatively and fully, you need to learn the OpenHab language, and when things go wrong, Java. We decided that it is better to use Java right away.
+Of course, there are commercial solutions that can do all this (for example, Crestron). But it is not always possible to pay that much money for the required hardware and software. And, athough flexible and ritch, commercial control systems are demanding in terms of specialized languages and fsdaf 
+Of course, there are open-source solutions that can do all this (for example, OpenHab). But in order to set them up, you need to learn the OpenHab language. And, when things go wrong, Java. We have decided that it is better to use Java right away.
 ## How to install GECS?
-GECS is a program written in JAVA 8 SE. At the moment, it has only been tested on Windows 10. To run it, you need:
+GECS is a program written in JAVA 8 SE. At the moment, it has only been tested on Windows 10. To run it, you need to:
 1. Install [Java](https://www.java.com/ru/) if you don't have it installed yet
-2. Download [GECS program]()
+2. Download [GECS program]
 3. Unpack the program and run it by writing on the command line
 ```
 java -jar GECS.jar
@@ -33,13 +33,13 @@ java -jar GECS.jar
 ## Set up JSON
 All GECS settings are stored in JSON files:
 structure.json - information about devices and their configuration
-cronSchedule.json - information about regularly switching exposure on and off
-specialSchedule.json - information about special days to turn on and off the exposure
-views.json - information on how to display devices in the GECS window
-viewTypes.json - information about how devices look in the GECS window
+cronSchedule.json - information about the timetable of switching on and off
+specialSchedule.json - information about exclusions from the timetable 
+views.json - information on how to place the device icons in the GECS window
+viewTypes.json - information about how devices icons look in the GECS window
 sources.json - information about external command sources
 bots.json - information about telegram bots
-### Configuring exposure in structure.json
+### Configuring exhibition in structure.json
 The structure in which the devices reside
 
 <img src="https://i.imgur.com/AWEZy5P.jpg" height="250">
