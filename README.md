@@ -3,7 +3,7 @@
 <img src="https://i.imgur.com/W8wbb4B.jpg" height="450">
 
 ## What is GECS?
-Exhibition and any other multimedia equipment, especially made without the participation of big capital, often fails. In-house made interactive exhibits, projectors and kiosks have to be switched on and off manually, by technical personnel. That is neither convenient nor comfortable. 
+Multimedia exhibition equipment, especially made without the participation of big capital, often fails. In-house made interactive exhibits, projectors and kiosks have to be switched on and off manually, by technical personnel. That is neither convenient nor comfortable. 
 GECS allows you to control and monitor the exhibition equipment. At the moment, these are the following devices:
 
 - Windows PC
